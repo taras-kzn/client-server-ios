@@ -46,6 +46,16 @@ class LikeController: UIControl {
     }
     
     @objc func upImage(sender: UIButton) {
+        let animation = CASpringAnimation(keyPath: "transform.scale")
+        animation.fromValue = 0
+        animation.toValue = 1
+        animation.stiffness = 200
+        animation.mass = 2
+        animation.duration = 2
+        animation.beginTime = CACurrentMediaTime() + 0.5
+        animation.fillMode = CAMediaTimingFillMode.backwards
+        
+        sender.layer.add(animation, forKey: nil)
         sender.setBackgroundImage(UIImage(named: "Image"), for: .normal)
         
         if self.count == 0{

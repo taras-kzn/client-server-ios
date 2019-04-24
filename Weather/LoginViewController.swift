@@ -10,6 +10,10 @@ import UIKit
 
 class LoginViewController: UIViewController {
 
+    @IBOutlet weak var signInLabel: UIButton!
+    @IBOutlet weak var loginLabel: UILabel!
+    @IBOutlet weak var weatherLabel: UILabel!
+    @IBOutlet weak var passwordLabel: UILabel!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var loginInput: UITextField!
     @IBOutlet weak var passwordInput: UITextField!
@@ -17,6 +21,10 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        animateAuthButton()
+        animateTitlesAppearing()
+        animationWeather()
         
         let hideKeyboardGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         
@@ -102,6 +110,39 @@ class LoginViewController: UIViewController {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
+    func animateTitlesAppearing(){
+        let offSet = view.bounds.width
+        loginLabel.transform = CGAffineTransform(translationX: -offSet, y: 0)
+        passwordLabel.transform = CGAffineTransform(translationX: offSet, y: 0)
+        
+        
+        UIView.animate(withDuration: 1, delay: 1, options: .curveEaseOut, animations: {
+            self.loginLabel.transform = .identity
+            self.passwordLabel.transform = .identity
+        }, completion: nil)
+    }
+    
+    func animationWeather(){
+        self.weatherLabel.transform = CGAffineTransform(translationX: 0, y: self.view.bounds.height / 2)
+        
+        UIView.animate(withDuration: 1, delay: 1, usingSpringWithDamping: 0.5, initialSpringVelocity: 0, options: .curveEaseOut , animations: {
+            self.weatherLabel.transform = .identity
+        })
+        
+    }
+    func animateAuthButton() {
+        let animation = CASpringAnimation(keyPath: "transform.scale")
+        animation.fromValue = 0
+        animation.toValue = 1
+        animation.stiffness = 200
+        animation.mass = 2
+        animation.duration = 2
+        animation.beginTime = CACurrentMediaTime() + 1
+        animation.fillMode = CAMediaTimingFillMode.backwards
+        
+        self.signInLabel.layer.add(animation, forKey: nil)
+    }
+    
     
     
     

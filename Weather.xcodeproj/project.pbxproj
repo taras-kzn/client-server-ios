@@ -82,7 +82,6 @@
 			children = (
 				841E4F222232E2C20085A486 /* PhotoViewController.swift */,
 				841E4F242232E3020085A486 /* PhotoCollectionViewCell.swift */,
-				842A654122418EBA00DB90F8 /* LikeController.swift */,
 			);
 			path = FotoFriend;
 			sourceTree = "<group>";
@@ -95,6 +94,14 @@
 				848837A9225D2AEB002A2A34 /* NewsTable.swift */,
 			);
 			path = news;
+			sourceTree = "<group>";
+		};
+		848B04682270385D00130154 /* Like */ = {
+			isa = PBXGroup;
+			children = (
+				842A654122418EBA00DB90F8 /* LikeController.swift */,
+			);
+			path = Like;
 			sourceTree = "<group>";
 		};
 		84F9F6CE2229A30C000527D6 = {
@@ -117,6 +124,7 @@
 			isa = PBXGroup;
 			children = (
 				84F9F6DE2229A30C000527D6 /* Main.storyboard */,
+				848B04682270385D00130154 /* Like */,
 				848837A4225D15A1002A2A34 /* news */,
 				841E4F212232DFA40085A486 /* FotoFriend */,
 				841E4F1C223275990085A486 /* Friend */,
