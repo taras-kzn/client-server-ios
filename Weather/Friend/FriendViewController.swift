@@ -13,6 +13,9 @@ class FriendViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
+    var friendServerc = FriendServic()
+    var friendsArray = [FriendsArray]()
+    
     
     
     var myFriend = [
@@ -52,6 +55,11 @@ class FriendViewController: UIViewController {
         tableView .register(FriendHeader.self, forHeaderFooterViewReuseIdentifier: "header")
         mapFriends = map(friends: self.myFriend)
         sortArray = self.mapFriends.keys.sorted()
+        friendServerc.loadFriendsData(friends: "3639061"){ [weak self] friendsArray in
+            // сохраняем полученные данные в массиве, чтобы коллекция могла получить к ним доступ
+            self?.friendsArray = (friendsArray)
+            self?.tableView.reloadData()
+        }
     
     }
     
@@ -78,37 +86,44 @@ class FriendViewController: UIViewController {
 
 extension FriendViewController : UITableViewDataSource,UITableViewDelegate{
     
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return mapFriends.keys.count
-    }
-    
+//    func numberOfSections(in tableView: UITableView) -> Int {
+//        //return mapFriends.keys.count
+//
+//    }
+//
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if isFilterFriend{
-            return filterFriend.count
-        }
-        let letter = sortArray[section]
-        let friendLetter = mapFriends[letter]!
-        return friendLetter.count
+//        if isFilterFriend{
+//            return filterFriend.count
+//        }
+//        let letter = sortArray[section]
+//        let friendLetter = mapFriends[letter]!
+//        return friendLetter.count
+        return friendsArray.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyFriendCell", for: indexPath) as! FriendTableViewCell
         
-        var friend : PersonGroup
-        if isFilterFriend{
-            friend = filterFriend[indexPath.row]
-        } else{
-            let letter = sortArray[indexPath.section]
-            let friendLetter = mapFriends[letter]!
-            friend = friendLetter[indexPath.row]
-            
-        }
-        cell.friendCell.text = friend.name
-        cell.photoCell.image = friend.photo
-        cell.photoCell.layer.cornerRadius = 15
-        cell.photoCell.layer.masksToBounds = true
-        cell.viewPhotoCell.layer.cornerRadius = 20
-        cell.viewPhotoCell.layer.shadowOpacity = 0.5
+//        var friend : PersonGroup
+//        if isFilterFriend{
+//            friend = filterFriend[indexPath.row]
+//        } else{
+//            let letter = sortArray[indexPath.section]
+//            let friendLetter = mapFriends[letter]!
+//            friend = friendLetter[indexPath.row]
+//
+//        }
+//        cell.friendCell.text = friend.name
+//        cell.photoCell.image = friend.photo
+//        cell.photoCell.layer.cornerRadius = 15
+//        cell.photoCell.layer.masksToBounds = true
+//        cell.viewPhotoCell.layer.cornerRadius = 20
+//        cell.viewPhotoCell.layer.shadowOpacity = 0.5
+        
+        let friends = friendsArray[indexPath.row]
+        
+        cell.friendCell.text = friends.firstName
+        cell.photoCell.image = UIImage(named: friends.photoId)
         
         return cell
         
