@@ -15,22 +15,17 @@ class VKViewController: UIViewController,WKNavigationDelegate {
     
     @IBOutlet weak var webView: WKWebView!
     
-    var friendsServec = FriendServic()
-    var friendsArray = [FriendsArray]()
+
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         webView.navigationDelegate = self
-        print(friendsArray)
-        
-        friendsServec.loadFriendsData(friends: "3639061"){ [weak self] friendsArray in
-            // сохраняем полученные данные в массиве, чтобы коллекция могла получить к ним доступ
-            self?.friendsArray = (friendsArray)
-          
-        }
-        
+       
+
         loginVK()
+        //logoutVK()
     
       
         

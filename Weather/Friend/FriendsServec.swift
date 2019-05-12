@@ -14,7 +14,7 @@ class FriendServic {
     // базовый URL сервиса
     let baseUrl = "https://api.vk.com"
     // ключ для доступа к сервису
-    let apiKey = "4077466b31867423d6d9bb3ea8211ad778549a409f3c1be8e70b8fbedda2d638b10ed3a667cc48f9137a4"
+    let apiKey = "c545b7b9eb127ca3dc3c2258e4d0f12fd683e46ae32fc6d9de77c6e0ea9c6722134a523c375f5c38abcf4"
     
     func loadFriendsData(friends: String,completion: @escaping ([FriendsArray]) -> Void ){
         let path = "/method/friends.get"

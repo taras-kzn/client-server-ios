@@ -15,7 +15,7 @@ class FriendViewController: UIViewController {
     
     var friendServerc = FriendServic()
     var friendsArray = [FriendsArray]()
-    
+
     
     
     var myFriend = [
@@ -59,8 +59,11 @@ class FriendViewController: UIViewController {
             // сохраняем полученные данные в массиве, чтобы коллекция могла получить к ним доступ
             self?.friendsArray = (friendsArray)
             self?.tableView.reloadData()
+            print(friendsArray.first?.lastName)
+            
         }
-    
+        
+       
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -123,7 +126,18 @@ extension FriendViewController : UITableViewDataSource,UITableViewDelegate{
         let friends = friendsArray[indexPath.row]
         
         cell.friendCell.text = friends.firstName
-        cell.photoCell.image = UIImage(named: friends.photoId)
+        let queue = DispatchQueue.global(qos: .utility)
+        let imageURL = NSURL(string: friends.photoId)
+        queue.async {
+            if let data = try? Data(contentsOf: imageURL as! URL ){
+                DispatchQueue.main.async {
+                    cell.photoCell.image = UIImage(data: data)
+                    
+                }
+            }
+            
+        }
+        
         
         return cell
         
@@ -164,7 +178,7 @@ extension FriendViewController : UITableViewDataSource,UITableViewDelegate{
         
         self.performSegue(withIdentifier: "shouVC", sender: friend)
     }
-    
+
 }
 
 extension FriendViewController : UISearchResultsUpdating{
