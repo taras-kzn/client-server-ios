@@ -9,21 +9,26 @@
 import Foundation
 import Alamofire
 import UIKit
+import RealmSwift
+
 
 class FriendServic {
     // базовый URL сервиса
     let baseUrl = "https://api.vk.com"
     // ключ для доступа к сервису
-    let apiKey = "c545b7b9eb127ca3dc3c2258e4d0f12fd683e46ae32fc6d9de77c6e0ea9c6722134a523c375f5c38abcf4"
     
-    func loadFriendsData(friends: String,completion: @escaping ([FriendsArray]) -> Void ){
+    
+//    let apiKey  =  "46b726ceefcff6554885d9c8556cbc9afa7e2ef51abfb8ac300ab14879053661bbf26d3e92af80f6d3e97"
+    
+    
+    func loadFriendsData(friends: String,token: String,completion: @escaping ([FriendsArray]) -> Void ){
         let path = "/method/friends.get"
         let parameters: Parameters = [
             "user_id": friends,
             "order": "hints",
             "count": "3",
             "fields": "domain,photo_50",
-            "access_token": apiKey,
+            "access_token": token,
             "v": "5.95"
         ]
         
@@ -39,10 +44,22 @@ class FriendServic {
             guard let data = repsonse.value else { return }
             let friend = try! JSONDecoder().decode(FriendsResponse.self, from: data).response
             var array = friend.items
+            self.saveFriendsData(array)
+            
             completion(array)
             
         }
-        
-        
+       
     }
+    func saveFriendsData(_ friends: [FriendsArray] ){
+        do {
+            let realm = try Realm()
+            realm.beginWrite()
+            realm.add(friends)
+            try realm.commitWrite()
+        }catch{
+            print(error)
+        }
+    }
+   
 }

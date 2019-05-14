@@ -38,11 +38,11 @@ extension PhotoViewController : UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoCollection", for: indexPath) as! PhotoCollectionViewCell
         let collection = photoColection[indexPath.row]
+
         cell.photoCell.image = collection.photo
         cell.namedc.text = collection.name
        
         return cell
     }
-    
-  
+
 }

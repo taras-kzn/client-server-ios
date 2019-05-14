@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import WebKit
+import SwiftKeychainWrapper
 
 class VKViewController: UIViewController,WKNavigationDelegate {
     
@@ -25,6 +26,8 @@ class VKViewController: UIViewController,WKNavigationDelegate {
        
 
         loginVK()
+        
+        print(Session.instance.token)
         //logoutVK()
     
       
@@ -79,8 +82,9 @@ class VKViewController: UIViewController,WKNavigationDelegate {
         }
         
         let token = params["access_token"]
-        Session.instance.token = (token)!
-        
+        //Session.instance.token = token!
+        KeychainWrapper.standard.set(token!, forKey: "token")
+//        loadSessionToken()
         print(token)
         
 //        Alamofire.request("https://api.vk.com/method/users.get?user_ids=3639061&fields=bdate,city,counters,photo_max_orig&access_token=dc0ede5e8a10f7d1c2414fbaa9c360b176b79d4f44786265d506491b9f02a7edc2da0edd262865e85351a&v=5.95").responseJSON { (response) in
@@ -105,5 +109,4 @@ class VKViewController: UIViewController,WKNavigationDelegate {
         decisionHandler(.cancel)
     }
 
- 
 }
