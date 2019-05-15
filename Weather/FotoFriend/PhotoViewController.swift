@@ -11,6 +11,7 @@ import UIKit
 class PhotoViewController: UIViewController {
     
     var photoColection = [PersonGroup(photo: UIImage(named: "santaKlaus")!, name: "Праздники")]
+    
 
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -30,6 +31,7 @@ extension PhotoViewController : UICollectionViewDataSource{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int{
         return photoColection.count
+       
     }
 
 
@@ -38,8 +40,7 @@ extension PhotoViewController : UICollectionViewDataSource{
         let collection = photoColection[indexPath.row]
         cell.photoCell.image = collection.photo
         cell.namedc.text = collection.name
-        
-        
+       
         return cell
     }
     
