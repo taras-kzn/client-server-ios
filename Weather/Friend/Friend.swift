@@ -9,6 +9,7 @@
 
 import UIKit
 import Alamofire
+import RealmSwift
 
 
 class FriendsResponse : Decodable {
@@ -22,16 +23,16 @@ class Items: Decodable {
 }
 
 
-class FriendsArray: Decodable {
+class FriendsArray: Object, Decodable {
     
-    var firstName = ""
-    var lastName = ""
-    var photoId = ""
-        enum CodingKeys: String, CodingKey {
-            case first_name
-            case last_name
-            case photo_50
-        }
+    @objc dynamic var firstName = ""
+    @objc dynamic var lastName = ""
+    @objc dynamic var photoId = ""
+            enum CodingKeys: String, CodingKey {
+                case first_name
+                case last_name
+                case photo_50
+            }
     
     convenience required init (from decoder: Decoder) throws {
         self.init()

@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import SwiftKeychainWrapper
+
 
 class FriendViewController: UIViewController {
     
@@ -15,6 +17,7 @@ class FriendViewController: UIViewController {
     
     var friendServerc = FriendServic()
     var friendsArray = [FriendsArray]()
+    var idAdel = ""
 
     
     
@@ -55,12 +58,17 @@ class FriendViewController: UIViewController {
         tableView .register(FriendHeader.self, forHeaderFooterViewReuseIdentifier: "header")
         mapFriends = map(friends: self.myFriend)
         sortArray = self.mapFriends.keys.sorted()
-        friendServerc.loadFriendsData(friends: "3639061"){ [weak self] friendsArray in
+        
+        userDefaulsSave()
+        loadStringUserDefauls()
+        loadSessionToken()
+
+        friendServerc.loadFriendsData(friends: idAdel,token: Session.instance.token){ [weak self] friendsArray in
             // сохраняем полученные данные в массиве, чтобы коллекция могла получить к ним доступ
             self?.friendsArray = (friendsArray)
             self?.tableView.reloadData()
             print(friendsArray.first?.lastName)
-            
+   
         }
         
        
@@ -192,6 +200,16 @@ extension FriendViewController : UISearchResultsUpdating{
         })
         
         tableView.reloadData()
+    }
+    private func userDefaulsSave() {
+        UserDefaults.standard.set("3639061", forKey:"idAdel")
+    }
+    private func loadStringUserDefauls() {
+        idAdel = UserDefaults.standard.string(forKey: "idAdel")!
+        print(idAdel)
+    }
+    private func loadSessionToken(){
+        Session.instance.token = KeychainWrapper.standard.string(forKey: "token")!
     }
    
 }
