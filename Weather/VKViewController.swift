@@ -95,7 +95,7 @@ class VKViewController: UIViewController,WKNavigationDelegate {
 //            print(response.value)
 //        }
 //
-//        Alamofire.request("https://api.vk.com/method/groups.get?user_id=3639061&count=3&extended=1&fields=city&access_token=\(Session.instance.token)&v=5.95").responseJSON { (response) in
+//        Alamofire.request("https://api.vk.com/method/groups.get?user_id=3639061&count=3&extended=1&fields=city&access_token=3e207768840b779bd071d9041c2f882be1a551de6d1ff432927fecbd4a092bd0e0e56e47ef44a62632ba4&v=5.95").responseJSON { (response) in
 //            print(response.value)
 //        }
         

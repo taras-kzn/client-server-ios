@@ -12,7 +12,8 @@ import UIKit
 
 class GroupViewController: UIViewController {
     
-    
+    var groupService = GroupService()
+    var groupArray = [GroupArray]()
        
 
     @IBOutlet weak var tableView: UITableView!
@@ -51,6 +52,19 @@ class GroupViewController: UIViewController {
         
         tableView.dataSource = self
         
+        userDefaulsSave()
+        loadStringUserDefauls()
+        loadSessionToken()
+        
+       
+        groupService.loadGroupData(idUser: userID, token: Session.instance.token, completion: { [weak self] groupArray in
+            // сохраняем полученные данные в массиве, чтобы коллекция могла получить к ним доступ
+            self?.groupArray = (groupArray)
+            self?.tableView.reloadData()
+            
+            
+        })
+        
         
         
     }
@@ -58,23 +72,36 @@ class GroupViewController: UIViewController {
 
 extension GroupViewController : UITableViewDataSource{
     
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
+//    func numberOfSections(in tableView: UITableView) -> Int {
+//        return 1
+//    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return myGroup.count
+        return groupArray.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyGroupCell", for: indexPath) as! GroupTableViewCell
-        let group = myGroup[indexPath.row]
-        cell.groupName.text = group.name
-        cell.photoCell.image = group.photo
+        //let group = myGroup[indexPath.row]
+//        cell.groupName.text = group.name
+//        cell.photoCell.image = group.photo
         cell.photoCell.layer.cornerRadius = 15
         cell.photoCell.layer.masksToBounds = true
         cell.viewPhotoCell.layer.cornerRadius = 20
         cell.viewPhotoCell.layer.shadowOpacity = 0.5
         
+        let groups = groupArray[indexPath.row]
+        cell.groupName.text = groups.gropuName
+        let queue = DispatchQueue.global(qos: .utility)
+        let imageURL = NSURL(string: groups.imageGroup)
+        queue.async {
+            if let data = try? Data(contentsOf: imageURL as! URL ){
+                DispatchQueue.main.async {
+                    cell.photoCell.image = UIImage(data: data)
+                    
+                }
+            }
+            
+        }
         return cell
     }
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath){
@@ -84,6 +111,8 @@ extension GroupViewController : UITableViewDataSource{
         }
         
     }
-    
+  
+ 
+   
 }
 

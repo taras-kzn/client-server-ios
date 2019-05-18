@@ -62,12 +62,14 @@ class FriendViewController: UIViewController {
         userDefaulsSave()
         loadStringUserDefauls()
         loadSessionToken()
+        print(idAdel)
 
-        friendServerc.loadFriendsData(friends: idAdel,token: Session.instance.token){ [weak self] friendsArray in
+        friendServerc.loadFriendsData(friends: userID,token: Session.instance.token){ [weak self] friendsArray in
             // сохраняем полученные данные в массиве, чтобы коллекция могла получить к ним доступ
             self?.friendsArray = (friendsArray)
             self?.tableView.reloadData()
             print(friendsArray.first?.lastName)
+            print(Session.instance.token)
    
         }
         
@@ -126,14 +128,14 @@ extension FriendViewController : UITableViewDataSource,UITableViewDelegate{
 //        }
 //        cell.friendCell.text = friend.name
 //        cell.photoCell.image = friend.photo
-//        cell.photoCell.layer.cornerRadius = 15
-//        cell.photoCell.layer.masksToBounds = true
-//        cell.viewPhotoCell.layer.cornerRadius = 20
-//        cell.viewPhotoCell.layer.shadowOpacity = 0.5
+        cell.photoCell.layer.cornerRadius = 15
+        cell.photoCell.layer.masksToBounds = true
+        cell.viewPhotoCell.layer.cornerRadius = 20
+        cell.viewPhotoCell.layer.shadowOpacity = 0.5
         
         let friends = friendsArray[indexPath.row]
         
-        cell.friendCell.text = friends.firstName
+        cell.friendCell.text = friends.firstName + " " + friends.lastName
         let queue = DispatchQueue.global(qos: .utility)
         let imageURL = NSURL(string: friends.photoId)
         queue.async {
@@ -201,16 +203,16 @@ extension FriendViewController : UISearchResultsUpdating{
         
         tableView.reloadData()
     }
-    private func userDefaulsSave() {
-        UserDefaults.standard.set("3639061", forKey:"idAdel")
-    }
-    private func loadStringUserDefauls() {
-        idAdel = UserDefaults.standard.string(forKey: "idAdel")!
-        print(idAdel)
-    }
-    private func loadSessionToken(){
-        Session.instance.token = KeychainWrapper.standard.string(forKey: "token")!
-    }
+//    func userDefaulsSave() {
+//        UserDefaults.standard.set("3639061", forKey:"idAdel")
+//    }
+//    private func loadStringUserDefauls() {
+//        idAdel = UserDefaults.standard.string(forKey: "idAdel")!
+//        print(idAdel)
+//    }
+//    private func loadSessionToken(){
+//        Session.instance.token = KeychainWrapper.standard.string(forKey: "token")!
+//    }
    
 }
 
