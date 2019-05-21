@@ -21,10 +21,10 @@ class FriendServic {
 //    let apiKey  =  "46b726ceefcff6554885d9c8556cbc9afa7e2ef51abfb8ac300ab14879053661bbf26d3e92af80f6d3e97"
     
     
-    func loadFriendsData(friends: String,token: String,completion: @escaping ([FriendsArray]) -> Void ){
+    func loadFriendsData(userId: String,token: String,completion: @escaping () -> Void ){
         let path = "/method/friends.get"
         let parameters: Parameters = [
-            "user_id": friends,
+            "user_id": userId,
             "order": "hints",
             "count": "10",
             "fields": "domain,photo_100",
@@ -44,19 +44,23 @@ class FriendServic {
             guard let data = repsonse.value else { return }
             let friend = try! JSONDecoder().decode(FriendsResponse.self, from: data).response
             var array = friend.items
-            self.saveFriendsData(array)
+            array.forEach {$0.uesrIdName = userId}
+            self.saveFriendsData(array, userId: userId)
             
-            completion(array)
+            completion()
             
         }
        
     }
-    func saveFriendsData(_ friends: [FriendsArray] ){
+    func saveFriendsData(_ friends: [FriendsArray], userId: String ){
         do {
             let realm = try Realm()
+            let oldFriends = realm.objects(FriendsArray.self).filter("uesrIdName == %@", userId )
             realm.beginWrite()
+            realm.delete(oldFriends)
             realm.add(friends)
             try realm.commitWrite()
+            print(realm.configuration.fileURL)
         }catch{
             print(error)
         }

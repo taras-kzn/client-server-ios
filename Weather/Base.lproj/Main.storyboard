@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="XmX-cd-SBM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="XmX-cd-SBM">
     <device id="retina6_1" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -173,14 +173,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y9r-ME-3bP">
-                                <rect key="frame" x="20" y="93" width="331" height="672"/>
-                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <wkWebViewConfiguration key="configuration">
-                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
-                                    <wkPreferences key="preferences"/>
-                                </wkWebViewConfiguration>
-                            </wkWebView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Xp-Rb-iRG">
                                 <rect key="frame" x="88" y="806" width="174" height="40"/>
                                 <color key="backgroundColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -192,26 +184,34 @@
                                     <segue destination="BcW-Da-8DX" kind="show" id="zvH-em-bUL"/>
                                 </connections>
                             </button>
+                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wpl-JP-6wN">
+                                <rect key="frame" x="0.0" y="119" width="369" height="529"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <wkWebViewConfiguration key="configuration">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="Y9r-ME-3bP" firstAttribute="top" secondItem="Gjr-DA-jbG" secondAttribute="top" constant="49" id="3u3-ZO-5A4"/>
-                            <constraint firstItem="Gjr-DA-jbG" firstAttribute="trailing" secondItem="Y9r-ME-3bP" secondAttribute="trailing" constant="63" id="5KL-5b-Gxq"/>
+                            <constraint firstItem="9Xp-Rb-iRG" firstAttribute="top" secondItem="Wpl-JP-6wN" secondAttribute="bottom" constant="158" id="F6u-Xp-Zmg"/>
                             <constraint firstAttribute="bottom" secondItem="9Xp-Rb-iRG" secondAttribute="bottom" constant="50" id="J8B-6F-F44"/>
                             <constraint firstAttribute="trailing" secondItem="9Xp-Rb-iRG" secondAttribute="trailing" constant="152" id="MX2-70-RFw"/>
-                            <constraint firstItem="Y9r-ME-3bP" firstAttribute="leading" secondItem="Gjr-DA-jbG" secondAttribute="leading" constant="20" id="YCh-9u-t8L"/>
+                            <constraint firstItem="Wpl-JP-6wN" firstAttribute="leading" secondItem="Vo9-bu-ZL3" secondAttribute="leading" id="VlI-mY-9kj"/>
+                            <constraint firstItem="Wpl-JP-6wN" firstAttribute="top" secondItem="Vo9-bu-ZL3" secondAttribute="top" constant="119" id="X14-nN-n4v"/>
                             <constraint firstItem="9Xp-Rb-iRG" firstAttribute="leading" secondItem="Vo9-bu-ZL3" secondAttribute="leading" constant="88" id="Yjs-jF-1Qn"/>
-                            <constraint firstItem="9Xp-Rb-iRG" firstAttribute="top" secondItem="Y9r-ME-3bP" secondAttribute="bottom" constant="41" id="fCQ-Wt-dSI"/>
+                            <constraint firstAttribute="trailing" secondItem="Wpl-JP-6wN" secondAttribute="trailing" constant="45" id="iyC-F5-lEc"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Gjr-DA-jbG"/>
                     </view>
                     <connections>
-                        <outlet property="webView" destination="Y9r-ME-3bP" id="r1W-22-AD8"/>
+                        <outlet property="webView" destination="Wpl-JP-6wN" id="mio-fY-ymD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qS9-pf-12z" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2361" y="76"/>
+            <point key="canvasLocation" x="2360.8695652173915" y="75.669642857142847"/>
         </scene>
         <!--Мои Друзья-->
         <scene sceneID="vQg-pB-K6y">
@@ -787,11 +787,11 @@
         </scene>
     </scenes>
     <resources>
-        <image name="add-friend (1)" width="25.600000381469727" height="25.600000381469727"/>
-        <image name="group" width="48" height="48"/>
-        <image name="newspaper" width="51.200000762939453" height="51.200000762939453"/>
-        <image name="paper" width="48" height="48"/>
-        <image name="text" width="48" height="48"/>
-        <image name="vkontakte" width="384" height="384"/>
+        <image name="add-friend (1)" width="32" height="32"/>
+        <image name="group" width="32" height="32"/>
+        <image name="newspaper" width="32" height="32"/>
+        <image name="paper" width="32" height="32"/>
+        <image name="text" width="32" height="32"/>
+        <image name="vkontakte" width="256" height="256"/>
     </resources>
 </document>

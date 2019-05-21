@@ -3,6 +3,7 @@
 import Foundation
 import UIKit
 import Alamofire
+import RealmSwift
 
 
 class GroupService  {
@@ -24,14 +25,29 @@ class GroupService  {
             guard let data = repsonse.value else { return }
             let group = try! JSONDecoder().decode(GroupResponse.self, from: data).response
             var array = group.items
-   
+            array.forEach {$0.userIdName = idUser}
+            self.saveGroupData(array, userId: userID)
             completion(array)
             
         }
 
     }
+    func saveGroupData(_ grops: [GroupArray], userId: String ){
+        do{
+            let realm = try Realm()
+            let oldGrops = realm.objects(GroupArray.self).filter("userIdName == %@", userId)
+            realm.beginWrite()
+            realm.delete(oldGrops)
+            realm.add(grops)
+            try realm.commitWrite()
+            print(realm.configuration.fileURL)
+            
+        }catch{
+            print("error")
+            
+        }
+        
+    }
     
-    
-    
-    
+
 }

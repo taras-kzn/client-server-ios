@@ -13,7 +13,7 @@ import SwiftKeychainWrapper
 
 class VKViewController: UIViewController,WKNavigationDelegate {
     
-    
+
     @IBOutlet weak var webView: WKWebView!
     
 

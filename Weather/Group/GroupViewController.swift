@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 
 
@@ -56,19 +57,34 @@ class GroupViewController: UIViewController {
         loadStringUserDefauls()
         loadSessionToken()
         
+        loadDataRealmGroups()
+        tableView.reloadData()
+        
        
-        groupService.loadGroupData(idUser: userID, token: Session.instance.token, completion: { [weak self] groupArray in
-            // сохраняем полученные данные в массиве, чтобы коллекция могла получить к ним доступ
-            self?.groupArray = (groupArray)
-            self?.tableView.reloadData()
-            
-            
-        })
+//        groupService.loadGroupData(idUser: userID, token: Session.instance.token, completion: { [weak self] groupArray in
+//            // сохраняем полученные данные в массиве, чтобы коллекция могла получить к ним доступ
+//            self?.groupArray = (groupArray)
+//            self?.tableView.reloadData()
+//
+//
+//        })
         
         
         
     }
+    func loadDataRealmGroups() {
+        do{
+            let realm = try Realm()
+            let grops = realm.objects(GroupArray.self).filter("userIdName == %@", "3639061").sorted(byKeyPath: "gropuName")
+            self.groupArray = Array(grops)
+            
+        }catch{
+            print("error")
+            
+        }
+    }
 }
+
 
 extension GroupViewController : UITableViewDataSource{
     
@@ -106,7 +122,7 @@ extension GroupViewController : UITableViewDataSource{
     }
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath){
         if editingStyle == .delete{
-            myGroup.remove(at: indexPath.row)
+            groupArray.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
         

@@ -8,6 +8,7 @@
 
 import UIKit
 import SwiftKeychainWrapper
+import RealmSwift
 
 
 class FriendViewController: UIViewController {
@@ -20,21 +21,11 @@ class FriendViewController: UIViewController {
     var idAdel = ""
 
     
-    
-    var myFriend = [
-        PersonGroup(photo: UIImage(named: "circles")!,name : "Ахметвалеев Рустем"),
-        PersonGroup(photo: UIImage(named: "Image3")!, name: "Ибрагимов Артур"),
-        PersonGroup(photo: UIImage(named: "car")!, name: "Зарипоп Руслан"),
-        PersonGroup(photo: UIImage(named: "santaKlaus")!, name: "Незамов Дамир")
-        
-    ]
-    
-    
-    var mapFriends = [String:[PersonGroup]]()
+    var mapFriends = [String:[FriendsArray]]()
     var sortArray = [String]()
     
 
-    var filterFriend = [PersonGroup]()
+    var filterFriend = [FriendsArray]()
     let searchController = UISearchController(searchResultsController: nil)
     var searchBarIsEmpety : Bool{
         guard let text = searchController.searchBar.text else {
@@ -56,31 +47,57 @@ class FriendViewController: UIViewController {
         searchController.searchBar.placeholder = "searh"
         definesPresentationContext = true
         tableView .register(FriendHeader.self, forHeaderFooterViewReuseIdentifier: "header")
-        mapFriends = map(friends: self.myFriend)
+        
+//        friendServerc.loadFriendsData(userId: userID,token: Session.instance.token){ [weak self]  in
+//            // сохраняем полученные данные в массиве, чтобы коллекция могла получить к ним доступ
+//            //self?.friendsArray = (friendsArray)
+//
+//
+//            //self?.loadDataRealm()
+//            //print(self?.friendsArray)
+//
+//
+//            self?.tableView.reloadData()
+//            print(Session.instance.token)
+//
+//        }
+        
+        loadDataRealm()
+        
+        
+        mapFriends = map(friends: self.friendsArray)
         sortArray = self.mapFriends.keys.sorted()
         
         userDefaulsSave()
         loadStringUserDefauls()
         loadSessionToken()
-        print(idAdel)
+        
+        //tableView.reloadData()
 
-        friendServerc.loadFriendsData(friends: userID,token: Session.instance.token){ [weak self] friendsArray in
-            // сохраняем полученные данные в массиве, чтобы коллекция могла получить к ним доступ
-            self?.friendsArray = (friendsArray)
-            self?.tableView.reloadData()
-            print(friendsArray.first?.lastName)
-            print(Session.instance.token)
-   
-        }
+        //print(sortArray)
+        print(mapFriends)
+
+ 
         
        
+    }
+    func loadDataRealm(){
+        do{
+            let realm = try Realm()
+            let friends = realm.objects(FriendsArray.self).filter("uesrIdName == %@","3639061")
+            self.friendsArray = Array(friends)
+
+        }catch{
+            print("error")
+            
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "shouVC"{
             let vc = segue.destination as? PhotoViewController
             if let indexPath = tableView.indexPathForSelectedRow{
-                var friend : PersonGroup
+                var friend : FriendsArray
                 if isFilterFriend{
                     friend = self.filterFriend[indexPath.row]
                 } else{
@@ -89,7 +106,7 @@ class FriendViewController: UIViewController {
                     friend = friendLetter[indexPath.row]
                     
                 }
-                vc?.photoColection = [friend]
+                vc?.friendArrayColecction = [friend]
             }
 
         }
@@ -99,45 +116,46 @@ class FriendViewController: UIViewController {
 
 extension FriendViewController : UITableViewDataSource,UITableViewDelegate{
     
-//    func numberOfSections(in tableView: UITableView) -> Int {
-//        //return mapFriends.keys.count
-//
-//    }
-//
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return mapFriends.keys.count
+
+
+    }
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        if isFilterFriend{
-//            return filterFriend.count
-//        }
-//        let letter = sortArray[section]
-//        let friendLetter = mapFriends[letter]!
-//        return friendLetter.count
-        return friendsArray.count
+        if isFilterFriend{
+            return filterFriend.count
+        }
+        let letter = sortArray[section]
+        let friendLetter = mapFriends[letter]!
+        print(friendLetter)
+        return friendLetter.count
+       // return friendsArray.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyFriendCell", for: indexPath) as! FriendTableViewCell
         
-//        var friend : PersonGroup
-//        if isFilterFriend{
-//            friend = filterFriend[indexPath.row]
-//        } else{
-//            let letter = sortArray[indexPath.section]
-//            let friendLetter = mapFriends[letter]!
-//            friend = friendLetter[indexPath.row]
-//
-//        }
-//        cell.friendCell.text = friend.name
-//        cell.photoCell.image = friend.photo
+        var friend : FriendsArray
+        if isFilterFriend{
+            friend = filterFriend[indexPath.row]
+        } else{
+            let letter = sortArray[indexPath.section]
+            let friendLetter = mapFriends[letter]!
+            friend = friendLetter[indexPath.row]
+
+        }
+
         cell.photoCell.layer.cornerRadius = 15
         cell.photoCell.layer.masksToBounds = true
         cell.viewPhotoCell.layer.cornerRadius = 20
         cell.viewPhotoCell.layer.shadowOpacity = 0.5
         
-        let friends = friendsArray[indexPath.row]
+        //let friends = friendsArray[indexPath.row]
         
-        cell.friendCell.text = friends.firstName + " " + friends.lastName
+        cell.friendCell.text = friend.lastName + " " + friend.firstName
         let queue = DispatchQueue.global(qos: .utility)
-        let imageURL = NSURL(string: friends.photoId)
+        let imageURL = NSURL(string: friend.photoId)
         queue.async {
             if let data = try? Data(contentsOf: imageURL as! URL ){
                 DispatchQueue.main.async {
@@ -162,13 +180,13 @@ extension FriendViewController : UITableViewDataSource,UITableViewDelegate{
         
     }
     
-    func map(friends: [PersonGroup])->[String:[PersonGroup]]{
-        var mapFriends = [String:[PersonGroup]]()
+    func map(friends: [FriendsArray])->[String:[FriendsArray]]{
+        var mapFriends = [String:[FriendsArray]]()
        
         
         for friend  in friends{
             
-            let firstLetter = String(friend.name.first!)
+            let firstLetter = String(friend.lastName.first!)
             var arrayLetter = mapFriends[firstLetter] ?? []
             arrayLetter.append(friend)
             mapFriends[String(firstLetter)] = arrayLetter
@@ -178,12 +196,12 @@ extension FriendViewController : UITableViewDataSource,UITableViewDelegate{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let friend : PersonGroup
+        let friend : FriendsArray
         
         if isFilterFriend{
             friend = filterFriend[indexPath.row]
         }else{
-            friend = myFriend[indexPath.row]
+            friend = friendsArray[indexPath.row]
         }
         
         self.performSegue(withIdentifier: "shouVC", sender: friend)
@@ -197,22 +215,12 @@ extension FriendViewController : UISearchResultsUpdating{
     }
     
     private func filterSerachText(_searchText:String){
-        filterFriend = myFriend.filter({ (friend: PersonGroup) -> Bool in
-            return friend.name.lowercased().contains(_searchText.lowercased())
+        filterFriend = friendsArray.filter({ (friend: FriendsArray) -> Bool in
+            return friend.lastName.lowercased().contains(_searchText.lowercased())
         })
         
         tableView.reloadData()
     }
-//    func userDefaulsSave() {
-//        UserDefaults.standard.set("3639061", forKey:"idAdel")
-//    }
-//    private func loadStringUserDefauls() {
-//        idAdel = UserDefaults.standard.string(forKey: "idAdel")!
-//        print(idAdel)
-//    }
-//    private func loadSessionToken(){
-//        Session.instance.token = KeychainWrapper.standard.string(forKey: "token")!
-//    }
-   
+
 }
 
