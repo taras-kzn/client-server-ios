@@ -26,8 +26,8 @@ class FriendServic {
         let parameters: Parameters = [
             "user_id": friends,
             "order": "hints",
-            "count": "3",
-            "fields": "domain,photo_50",
+            "count": "10",
+            "fields": "domain,photo_100",
             "access_token": token,
             "v": "5.95"
         ]

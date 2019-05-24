@@ -31,7 +31,7 @@ class FriendsArray: Object, Decodable {
             enum CodingKeys: String, CodingKey {
                 case first_name
                 case last_name
-                case photo_50
+                case photo_100
             }
     
     convenience required init (from decoder: Decoder) throws {
@@ -39,7 +39,7 @@ class FriendsArray: Object, Decodable {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         self.firstName = try values.decode(String.self, forKey: .first_name)
         self.lastName = try values.decode(String.self, forKey: .last_name)
-        self.photoId = try values.decode(String.self, forKey: .photo_50)
+        self.photoId = try values.decode(String.self, forKey: .photo_100)
         
     }
 
