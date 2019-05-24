@@ -28,14 +28,15 @@ class PhotoViewController: UIViewController {
         userDefaulsSave()
         loadStringUserDefauls()
         loadSessionToken()
+
         
-        friendServiceCoolection.loadFriendsData(friends: userID, token: Session.instance.token) { [weak self] friendsArray in
-            // сохраняем полученные данные в массиве, чтобы коллекция могла получить к ним доступ
-            self?.friendArrayColecction = (friendsArray)
-            self?.collectionView.reloadData()
-           
-            
-        }
+//        friendServiceCoolection.loadFriendsData(userId: userID, token: Session.instance.token) { [weak self] friendsArray in
+//            // сохраняем полученные данные в массиве, чтобы коллекция могла получить к ним доступ
+//            self?.friendArrayColecction = (friendsArray)
+//            self?.collectionView.reloadData()
+//           
+//            
+//        }
         
    
 
@@ -59,9 +60,9 @@ extension PhotoViewController : UICollectionViewDataSource{
 //
 //        cell.photoCell.image = collection.photo
 //        cell.namedc.text = collection.name
-        let friens = friendArrayColecction[indexPath.row]
-        cell.namedc.text = friens.firstName + "" + friens.lastName
-        fileSystemSave(image: friens.photoId)
+        let friends = friendArrayColecction[indexPath.row]
+        cell.namedc.text = friends.firstName + "" + friends.lastName
+        fileSystemSave(image: friends.photoId)
         loadImage(cellImage: cell.photoCell)
         
         return cell

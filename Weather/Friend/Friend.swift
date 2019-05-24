@@ -28,11 +28,25 @@ class FriendsArray: Object, Decodable {
     @objc dynamic var firstName = ""
     @objc dynamic var lastName = ""
     @objc dynamic var photoId = ""
+    @objc dynamic var userName = ""
+    @objc dynamic var uesrIdName = ""
+    
+    
             enum CodingKeys: String, CodingKey {
                 case first_name
                 case last_name
                 case photo_100
             }
+            enum UserName: String {
+                case adel
+            }
+            enum UserIdName: String{
+                case adelId = "3639061"
+            }
+
+
+
+
     
     convenience required init (from decoder: Decoder) throws {
         self.init()
@@ -40,6 +54,9 @@ class FriendsArray: Object, Decodable {
         self.firstName = try values.decode(String.self, forKey: .first_name)
         self.lastName = try values.decode(String.self, forKey: .last_name)
         self.photoId = try values.decode(String.self, forKey: .photo_100)
+        
+        self.userName = UserName.adel.rawValue
+        self.uesrIdName = UserIdName.adelId.rawValue
         
     }
 
