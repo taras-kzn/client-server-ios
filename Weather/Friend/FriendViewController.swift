@@ -19,6 +19,7 @@ class FriendViewController: UIViewController {
     var friendServerc = FriendServic()
     var friendsArray = [FriendsArray]()
     var idAdel = ""
+    var notif: NotificationToken?
 
     
     var mapFriends = [String:[FriendsArray]]()
@@ -53,15 +54,15 @@ class FriendViewController: UIViewController {
 //            //self?.friendsArray = (friendsArray)
 //
 //
-//            //self?.loadDataRealm()
-//            //print(self?.friendsArray)
+//            self?.loadDataRealm()
+
 //
 //
 //            self?.tableView.reloadData()
-//            print(Session.instance.token)
+//            //print(Session.instance.token)
 //
 //        }
-        
+
         loadDataRealm()
         
         
@@ -72,10 +73,12 @@ class FriendViewController: UIViewController {
         loadStringUserDefauls()
         loadSessionToken()
         
-        //tableView.reloadData()
+        tableView.reloadData()
 
         //print(sortArray)
-        print(mapFriends)
+//        print(mapFriends)
+//        print(friendsArray)
+        
 
  
         
@@ -86,6 +89,28 @@ class FriendViewController: UIViewController {
             let realm = try Realm()
             let friends = realm.objects(FriendsArray.self).filter("uesrIdName == %@","3639061")
             self.friendsArray = Array(friends)
+            notif = friends.observe{ [weak self] changes in
+                switch changes {
+
+                case .initial:
+                    self?.tableView.reloadData()
+                case .update(_, let deletions, let insertions, let modifications):
+                    self?.tableView.beginUpdates()
+                    self?.tableView.performBatchUpdates({self?.tableView.insertRows(at: insertions.map({ IndexPath(row: $0, section: (self?.mapFriends.count)!)}),with: .automatic)
+                        self?.tableView.deleteRows(at: deletions.map({ IndexPath(row: $0, section: (self?.mapFriends.count)!)}),with: .automatic)
+                        self?.tableView.reloadRows(at: modifications.map({ IndexPath(row: $0, section: (self?.mapFriends.count)!)}),with: .automatic)
+                        print(deletions,modifications,insertions)
+
+                    }, completion: {_ in
+                        print("update")
+                    })
+                    self?.tableView.endUpdates()
+                case .error(let error):
+                    print(error)
+                }
+                print("изминения прошли")
+
+            }
 
         }catch{
             print("error")
@@ -118,7 +143,7 @@ extension FriendViewController : UITableViewDataSource,UITableViewDelegate{
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return mapFriends.keys.count
-
+        //return friendsArray.count
 
     }
 
@@ -130,7 +155,7 @@ extension FriendViewController : UITableViewDataSource,UITableViewDelegate{
         let friendLetter = mapFriends[letter]!
         print(friendLetter)
         return friendLetter.count
-       // return friendsArray.count
+    
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -145,6 +170,7 @@ extension FriendViewController : UITableViewDataSource,UITableViewDelegate{
             friend = friendLetter[indexPath.row]
 
         }
+
 
         cell.photoCell.layer.cornerRadius = 15
         cell.photoCell.layer.masksToBounds = true

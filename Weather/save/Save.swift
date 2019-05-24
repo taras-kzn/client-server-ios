@@ -23,27 +23,11 @@ func loadStringUserDefauls(){
 func loadSessionToken(){
     Session.instance.token = KeychainWrapper.standard.string(forKey: "token")!
 }
-func getDocumentsDirectory() -> URL {
+func loadImageToCache() -> URL {
     return FileManager.default.urls(for: FileManager.SearchPathDirectory.documentDirectory, in: FileManager.SearchPathDomainMask.userDomainMask)[0]
 }
- func fileSystemSave(image: String) {
-    let fileUrl = getDocumentsDirectory().appendingPathComponent("friend.png")
-    let url = URL(string: image)
-    let dataUrl = try! Data(contentsOf: url!)
-    
-    guard let data = UIImage(data: dataUrl)?.pngData() else {return}
-    
-    do {
-        try data.write(to: fileUrl)
-        
-    }catch{
-        print(error)
-        return
-    }
-    print("image save")
-}
 func loadImage(cellImage: UIImageView) {
-    let fileUrl = getDocumentsDirectory().appendingPathComponent("friend.png")
+    let fileUrl = loadImageToCache().appendingPathComponent("friend.png")
     
     do{
         let imageData = try Data.init(contentsOf: fileUrl)
