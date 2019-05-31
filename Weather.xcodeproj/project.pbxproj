@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		7FE0CCCD7196BC39CC40000B /* Pods_Weather.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD05A5BA3DDF0240C9B16A69 /* Pods_Weather.framework */; };
+		84197BF5229FB9D4003091FC /* AllGoup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84197BF4229FB9D4003091FC /* AllGoup.swift */; };
+		84197BF7229FBE56003091FC /* AllGroupsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84197BF6229FBE56003091FC /* AllGroupsService.swift */; };
+		84197C01229FEDAE003091FC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84197C00229FEDAE003091FC /* GoogleService-Info.plist */; };
+		84197C05229FF8CF003091FC /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84197C04229FF8CF003091FC /* ChatViewController.swift */; };
+		84197C0A229FFA5A003091FC /* ChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84197C08229FFA5A003091FC /* ChatTableViewCell.swift */; };
+		84197C0B229FFA5A003091FC /* ChatTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84197C09229FFA5A003091FC /* ChatTableViewCell.xib */; };
 		841E4F1E223275E60085A486 /* FriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841E4F1D223275E60085A486 /* FriendViewController.swift */; };
 		841E4F20223277480085A486 /* FriendTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841E4F1F223277480085A486 /* FriendTableViewCell.swift */; };
 		841E4F232232E2C20085A486 /* PhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841E4F222232E2C20085A486 /* PhotoViewController.swift */; };
@@ -42,6 +48,12 @@
 
 /* Begin PBXFileReference section */
 		1E606C5BA0284BF467D7BDD1 /* Pods-Weather.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Weather.debug.xcconfig"; path = "Target Support Files/Pods-Weather/Pods-Weather.debug.xcconfig"; sourceTree = "<group>"; };
+		84197BF4229FB9D4003091FC /* AllGoup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllGoup.swift; sourceTree = "<group>"; };
+		84197BF6229FBE56003091FC /* AllGroupsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllGroupsService.swift; sourceTree = "<group>"; };
+		84197C00229FEDAE003091FC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		84197C04229FF8CF003091FC /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		84197C08229FFA5A003091FC /* ChatTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatTableViewCell.swift; sourceTree = "<group>"; };
+		84197C09229FFA5A003091FC /* ChatTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatTableViewCell.xib; sourceTree = "<group>"; };
 		841E4F1D223275E60085A486 /* FriendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendViewController.swift; sourceTree = "<group>"; };
 		841E4F1F223277480085A486 /* FriendTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendTableViewCell.swift; sourceTree = "<group>"; };
 		841E4F222232E2C20085A486 /* PhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewController.swift; sourceTree = "<group>"; };
@@ -96,6 +108,16 @@
 				DD05A5BA3DDF0240C9B16A69 /* Pods_Weather.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		84197C03229FF88B003091FC /* messange */ = {
+			isa = PBXGroup;
+			children = (
+				84197C04229FF8CF003091FC /* ChatViewController.swift */,
+				84197C08229FFA5A003091FC /* ChatTableViewCell.swift */,
+				84197C09229FFA5A003091FC /* ChatTableViewCell.xib */,
+			);
+			path = messange;
 			sourceTree = "<group>";
 		};
 		841E4F1C223275990085A486 /* Friend */ = {
@@ -178,6 +200,7 @@
 			children = (
 				84F9F6DE2229A30C000527D6 /* Main.storyboard */,
 				84733E17227DABCE009D97CC /* VKViewController.swift */,
+				84197C03229FF88B003091FC /* messange */,
 				84988CC6228EC1D0005B0926 /* save */,
 				848B046922704A4400130154 /* Singleton */,
 				848B04682270385D00130154 /* Like */,
@@ -187,10 +210,11 @@
 				84F9F7372231407C000527D6 /* Group */,
 				84F9F730223128B2000527D6 /* AllGroup */,
 				84F9F6DA2229A30C000527D6 /* AppDelegate.swift */,
-				84F9F6EC2229A326000527D6 /* LoginViewController.swift */,
 				84F9F6E12229A30D000527D6 /* Assets.xcassets */,
 				84F9F6E32229A30D000527D6 /* LaunchScreen.storyboard */,
+				84F9F6EC2229A326000527D6 /* LoginViewController.swift */,
 				84F9F6E62229A30D000527D6 /* Info.plist */,
+				84197C00229FEDAE003091FC /* GoogleService-Info.plist */,
 				841E4F262236D14A0085A486 /* File.swift */,
 				841E4F2D22392AD10085A486 /* CALayerExstension.swift */,
 			);
@@ -203,6 +227,8 @@
 				84F9F733223129B7000527D6 /* AllGroupViewController.swift */,
 				84F9F73522312A00000527D6 /* AllGroupViewCell.swift */,
 				84A590CF2252A2900065F2DE /* HeaderGroup.swift */,
+				84197BF4229FB9D4003091FC /* AllGoup.swift */,
+				84197BF6229FBE56003091FC /* AllGroupsService.swift */,
 			);
 			path = AllGroup;
 			sourceTree = "<group>";
@@ -288,6 +314,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				84F9F6E52229A30D000527D6 /* LaunchScreen.storyboard in Resources */,
+				84197C01229FEDAE003091FC /* GoogleService-Info.plist in Resources */,
+				84197C0B229FFA5A003091FC /* ChatTableViewCell.xib in Resources */,
 				84F9F6E22229A30D000527D6 /* Assets.xcassets in Resources */,
 				84F9F6E02229A30C000527D6 /* Main.storyboard in Resources */,
 			);
@@ -328,18 +356,34 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Weather/Pods-Weather-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/BoringSSL-GRPC/openssl_grpc.framework",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
+				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftKeychainWrapper/SwiftKeychainWrapper.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-C++/grpcpp.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-Core/grpc.framework",
+				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl_grpc.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftKeychainWrapper.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpcpp.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpc.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -365,6 +409,7 @@
 				84F9F6ED2229A326000527D6 /* LoginViewController.swift in Sources */,
 				84DD8A90228429C90050F2C9 /* FriendsServec.swift in Sources */,
 				84733E18227DABCE009D97CC /* VKViewController.swift in Sources */,
+				84197BF5229FB9D4003091FC /* AllGoup.swift in Sources */,
 				84988CC3228EB5B3005B0926 /* GroupService.swift in Sources */,
 				848837AA225D2AEB002A2A34 /* NewsTable.swift in Sources */,
 				84988CD0228ED10F005B0926 /* NewsResponse.swift in Sources */,
@@ -373,12 +418,15 @@
 				84F9F6DB2229A30C000527D6 /* AppDelegate.swift in Sources */,
 				84988CCA228EC20F005B0926 /* Save.swift in Sources */,
 				84F9F72F22311CC5000527D6 /* GroupTableViewCell.swift in Sources */,
+				84197BF7229FBE56003091FC /* AllGroupsService.swift in Sources */,
 				84A3762D2282F49400562BC3 /* Friend.swift in Sources */,
 				84988CCC228ED0E2005B0926 /* NewsService.swift in Sources */,
 				841E4F272236D14A0085A486 /* File.swift in Sources */,
 				848837A6225D15CF002A2A34 /* NewsViewController.swift in Sources */,
+				84197C0A229FFA5A003091FC /* ChatTableViewCell.swift in Sources */,
 				8487B944225102F1003A088C /* FriendHeader.swift in Sources */,
 				841E4F20223277480085A486 /* FriendTableViewCell.swift in Sources */,
+				84197C05229FF8CF003091FC /* ChatViewController.swift in Sources */,
 				848837A8225D1AB0002A2A34 /* NewsTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

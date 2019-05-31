@@ -87,7 +87,7 @@ class VKViewController: UIViewController,WKNavigationDelegate {
 //        loadSessionToken()
         print(token)
         
-//        Alamofire.request("https://api.vk.com/method/users.get?user_ids=3639061&fields=bdate,city,counters,photo_max_orig&access_token=dc0ede5e8a10f7d1c2414fbaa9c360b176b79d4f44786265d506491b9f02a7edc2da0edd262865e85351a&v=5.95").responseJSON { (response) in
+//        Alamofire.request("https://api.vk.com/method/groups.getCatalog?category_id=123424&subcategory_id&access_token=e49b3597439dde1b5bcdb9aa5163510a3754276eef8c6543c5cb77fccbd5cd98f687f312318e61c3af210&v=5.95").responseJSON { (response) in
 //            print(response.value)
 //        }
 //

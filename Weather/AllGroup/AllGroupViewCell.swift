@@ -30,7 +30,7 @@ class AllGroupViewCell: UITableViewCell {
             super.awakeFromNib()
         
        
-        // Initialization code
+    
     }
    
    

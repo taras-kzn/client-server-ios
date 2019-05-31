@@ -7,10 +7,12 @@
 //
 
 import UIKit
+import FirebaseAuth
+
 
 class LoginViewController: UIViewController {
 
-    @IBOutlet weak var signInLabel: UIButton!
+
     @IBOutlet weak var loginLabel: UILabel!
     @IBOutlet weak var weatherLabel: UILabel!
     @IBOutlet weak var passwordLabel: UILabel!
@@ -18,11 +20,14 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var loginInput: UITextField!
     @IBOutlet weak var passwordInput: UITextField!
     
+    var listener: AuthStateDidChangeListenerHandle?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        animateAuthButton()
+        
+  //      animateAuthButton()
         animateTitlesAppearing()
         animationWeather()
         
@@ -34,41 +39,82 @@ class LoginViewController: UIViewController {
     }
     
     
-    @IBAction func signIn(_ sender: Any) {
-        
-        let login = loginInput.text!
-        let password = passwordInput.text!
-        
-        if login == "a" && password == "1" {
-            print("успешная авторизация")
-        } else {
-            print("неуспешная авторизация")
-        }
 
-    }
-    
-    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool{
-        let checkResult = checkUserData()
-        if !checkResult {
-            showLoginError()
+    @IBAction func singIn(_ sender: Any) {
+        guard let email = loginInput.text,
+        let password = passwordInput.text,
+            email.count > 0,
+            password.count > 0 else {
+            return
+                self.showLoginError(titel: "Error", message: "Логин  пароль не введен")
         }
-        return checkResult
+        Auth.auth().signIn(withEmail: email, password: password) { user, error in
+            if let error = error,user  == nil {
+                self.showLoginError(titel: "Error", message: error.localizedDescription)
+            }
+            
+        }
     }
     
-    func checkUserData() -> Bool{
-        let login = loginInput.text!
-        let password = passwordInput.text!
+    @IBAction func singUp(_ sender: Any) {
         
-        if login == "a" && password == "1" {
-            return true
-        } else {
-            return false
+        
+        // 1
+        let alert = UIAlertController(title: "Register",
+                                      message: "Register",
+                                      preferredStyle: .alert)
+        // 2
+        alert.addTextField { textEmail in
+            textEmail.placeholder = "Введите адрес электронной почты"
         }
-
+        alert.addTextField { textPassword in
+            textPassword.isSecureTextEntry = true
+            textPassword.placeholder = "Введите ваш пароль"
+        }
+        // 3
+        let cancelAction = UIAlertAction(title: "Cancel",
+                                         style: .cancel)
+        
+        
+        // 4
+        let saveAction = UIAlertAction(title: "Save", style: .default) { _ in
+            // 4.1
+            guard let emailField = alert.textFields?[0],
+                let passwordField = alert.textFields?[1],
+                let password = passwordField.text,
+                let email = emailField.text else { return }
+            // 4.2
+            Auth.auth().createUser(withEmail: email, password: password) { [weak self] user, error in
+                if let error = error {
+                    self?.showLoginError(titel:
+                        "Error", message: error.localizedDescription)
+                } else {
+                    // 4.3
+                    Auth.auth().signIn(withEmail: email, password: password)
+                }
+            }
+        }
+        // 5
+        alert.addAction(saveAction)
+        alert.addAction(cancelAction)
+        present(alert, animated: true, completion: nil)
     }
+
+
+  
     
-    func showLoginError(){
-        let alter = UIAlertController(title: "Ошибка", message: "Введены не верные данные пользователя", preferredStyle: .alert)
+//    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool{
+//        let checkResult = checkUserData()
+//        if !checkResult {
+//            showLoginError()
+//        }
+//        return checkResult
+//    }
+    
+
+
+    func showLoginError(titel: String,message: String){
+        let alter = UIAlertController(title: titel, message: message, preferredStyle: .alert)
         let action = UIAlertAction(title: "OK", style: .cancel, handler: nil)
         alter.addAction(action)
         present(alter, animated: true, completion: nil)
@@ -99,6 +145,13 @@ class LoginViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        listener = Auth.auth().addStateDidChangeListener { _, user in
+            print(user?.email)
+            if user != nil{
+                self.performSegue(withIdentifier: "login", sender: self)
+            }
+        }
+        
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWasShown), name: UIResponder.keyboardWillShowNotification, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillBeHidden(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -106,6 +159,8 @@ class LoginViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool){
         super.viewWillDisappear(animated)
+        
+        Auth.auth().removeStateDidChangeListener(listener!)
         
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -130,18 +185,18 @@ class LoginViewController: UIViewController {
         })
         
     }
-    func animateAuthButton() {
-        let animation = CASpringAnimation(keyPath: "transform.scale")
-        animation.fromValue = 0
-        animation.toValue = 1
-        animation.stiffness = 200
-        animation.mass = 2
-        animation.duration = 2
-        animation.beginTime = CACurrentMediaTime() + 1
-        animation.fillMode = CAMediaTimingFillMode.backwards
-        
-        self.signInLabel.layer.add(animation, forKey: nil)
-    }
+//    func animateAuthButton() {
+//        let animation = CASpringAnimation(keyPath: "transform.scale")
+//        animation.fromValue = 0
+//        animation.toValue = 1
+//        animation.stiffness = 200
+//        animation.mass = 2
+//        animation.duration = 2
+//        animation.beginTime = CACurrentMediaTime() + 1
+//        animation.fillMode = CAMediaTimingFillMode.backwards
+//
+//        self.signInLabel.layer.add(animation, forKey: nil)
+//    }
     
     
     

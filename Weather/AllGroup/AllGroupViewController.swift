@@ -7,22 +7,28 @@
 //
 
 import UIKit
+import RealmSwift
+import FirebaseAuth
 
 
 
 class AllGroupViewController: UIViewController {
     
+    var allGroupService = AllGroupService()
+    var allGroupArray = [AllGroupArray]()
+    
     let searchController = UISearchController (searchResultsController: nil )
-    var filterPersons = [ PersonGroup ] ()
+    var filterPersons = [ AllGroupArray ] ()
     
     var sections: [String] = []
-    var personInSections: [String: [PersonGroup]] = [:]
+    var personInSections: [String: [AllGroupArray]] = [:]
     
-    private var selectedPerson: PersonGroup?
+    private var selectedPerson: AllGroupArray?
  
     @IBOutlet weak var tableView: UITableView!
     
     var persons = [PersonGroup.init(photo: UIImage(named: "circles")!, name:"Спорт и здоровый образ жизни"),PersonGroup.init(photo:UIImage(named: "car")! , name: "Авто любители"),PersonGroup.init(photo: UIImage(named: "kompjuter")!, name: "Уроки по swift"),PersonGroup.init(photo: UIImage(named: "airplane")!, name: "Самолеты")]
+    
     
  
     
@@ -43,7 +49,21 @@ class AllGroupViewController: UIViewController {
         
         definesPresentationContext = true
         
-        self.filterPersons = self.persons
+        
+        loadDataRealmAllGroups()
+        tableView.reloadData()
+//        allGroupService.loadAllGroupData(token: Session.instance.token) { [weak self] allGroupArray  in
+//            self?.allGroupArray = (allGroupArray)
+//
+//        }
+//        print(allGroupArray)
+        
+        
+
+        
+        
+        
+        self.filterPersons = self.allGroupArray
         
         
         fillSections()
@@ -62,11 +82,23 @@ class AllGroupViewController: UIViewController {
     }
     
     func filterContentForSearchText(_ searchText: String, scope: String = "All") {
-        filterPersons = persons.filter({( person : PersonGroup) -> Bool in
-            return person.name.lowercased().contains(searchText.lowercased())
+        filterPersons = allGroupArray.filter({( person : AllGroupArray) -> Bool in
+            return person.allGroupName.lowercased().contains(searchText.lowercased())
         })
         
         tableView.reloadData()
+    }
+    func loadDataRealmAllGroups() {
+        do{
+            let realm = try Realm()
+            let grops = realm.objects(AllGroupArray.self)
+            self.allGroupArray = Array(grops)
+            
+            
+        }catch{
+            print("error")
+            
+        }
     }
     
     
@@ -77,9 +109,9 @@ extension AllGroupViewController : UITableViewDataSource,UITableViewDelegate{
     
     
     func numberOfSections(in tableView: UITableView) -> Int {
-       
+
         return sections.count
-        
+
     }
     
     
@@ -87,10 +119,10 @@ extension AllGroupViewController : UITableViewDataSource,UITableViewDelegate{
     
         let letter = self.sections[section]
         let groupOnLetter = personInSections[letter] ?? []
-        
+
         if isFiltering() {
           return filterPersons.count
-            
+
         }
         
         return groupOnLetter.count
@@ -100,19 +132,30 @@ extension AllGroupViewController : UITableViewDataSource,UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "GroupCell", for: indexPath) as! AllGroupViewCell
-        let person: PersonGroup
+        let person: AllGroupArray
         let letter = self.sections[indexPath.section]
         let groupOnLetter = personInSections[letter] ?? []
-        
+
         if isFiltering() {
             person = filterPersons[indexPath.row]
         } else {
             person = groupOnLetter[indexPath.row]
+
+        }
+
+        cell.groupName.text = person.allGroupName
+        let queue = DispatchQueue.global(qos: .utility)
+        let imageURL = NSURL(string: person.allGroupImage)
+        queue.async {
+            if let data = try? Data(contentsOf: imageURL as! URL ){
+                DispatchQueue.main.async {
+                    cell.photoCell.image = UIImage(data: data)
+                    
+                }
+            }
             
         }
-        
-        cell.groupName.text = person.name
-        cell.photoCell.image = person.photo
+
         cell.photoCell.layer.cornerRadius = 15
         cell.photoCell.layer.masksToBounds = true
         cell.viewPhotoCell.layer.cornerRadius = 20
@@ -147,7 +190,7 @@ extension AllGroupViewController{
    
   
     func fillSections() {
-        sections = Array(Set(persons.map { String(($0.name.first)!) })).sorted()
+        sections = Array(Set(allGroupArray.map { String(($0.allGroupName.first)!) })).sorted()
         
     }
     
@@ -156,10 +199,10 @@ extension AllGroupViewController{
     func fillSectionsWithFriends() {
         self.personInSections.removeAll()
         
-        for person in self.persons {
-            guard let firstLetter = person.name.first else { continue }
+        for person in self.allGroupArray {
+            guard let firstLetter = person.allGroupName.first else { continue }
             
-            var groups: [PersonGroup] = []
+            var groups: [AllGroupArray] = []
             
             if let personInSections = self.personInSections[String(firstLetter)] {
                 groups.append(contentsOf: personInSections)
