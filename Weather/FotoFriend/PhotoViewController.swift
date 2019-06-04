@@ -67,5 +67,33 @@ extension PhotoViewController : UICollectionViewDataSource{
         
         return cell
     }
+    private func fileSystemSave(image: String) {
+        let fileUrl = loadImageToCache().appendingPathComponent("friend.png")
+        let url = URL(string: image)
+        let dataUrl = try! Data(contentsOf: url!)
+        
+        guard let data = UIImage(data: dataUrl)?.pngData() else {return}
+        
+        do {
+            try data.write(to: fileUrl)
+            
+        }catch{
+            print(error)
+            return
+        }
+        print("image save")
+    }
+    private func loadImage(cellImage: UIImageView) {
+        let fileUrl = loadImageToCache().appendingPathComponent("friend.png")
+        
+        do{
+            let imageData = try Data.init(contentsOf: fileUrl)
+            cellImage.image = UIImage(data: imageData)
+        }catch{
+            print("error")
+            return
+        }
+        print("LoadImage")
+    }
 
 }
