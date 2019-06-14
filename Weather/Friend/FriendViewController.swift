@@ -56,8 +56,6 @@ class FriendViewController: UIViewController {
 //
 //            self?.loadDataRealm()
 
-//
-//
 //            self?.tableView.reloadData()
 //            //print(Session.instance.token)
 //
@@ -75,9 +73,7 @@ class FriendViewController: UIViewController {
         
         tableView.reloadData()
 
-        //print(sortArray)
-//        print(mapFriends)
-//        print(friendsArray)
+
         
 
  
@@ -143,7 +139,7 @@ extension FriendViewController : UITableViewDataSource,UITableViewDelegate{
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return mapFriends.keys.count
-        //return friendsArray.count
+       
 
     }
 

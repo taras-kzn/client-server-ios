@@ -8,6 +8,7 @@
 
 import UIKit
 import RealmSwift
+import FirebaseAuth
 
 
 
@@ -20,14 +21,14 @@ class GroupViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     
-    var myGroup = [PersonGroup]()
+    var myGroup = [AllGroupArray]()
     
     @IBAction func addGroup(segue: UIStoryboardSegue) {
         if segue.identifier == "addGroup"{
             let allGroupController = segue.source as! AllGroupViewController
             if let indexPath = allGroupController.tableView.indexPathForSelectedRow{
                 
-                let person: PersonGroup
+                let person: AllGroupArray
                 let letter = allGroupController.sections[indexPath.section]
                 let groupOnLetter = allGroupController.personInSections[letter] ?? []
                 
@@ -37,11 +38,11 @@ class GroupViewController: UIViewController {
                     person = groupOnLetter[indexPath.row]
                     
                 }
-                
-                //let group = allGroupController.persons[indexPath.row]
+ 
                 if !myGroup.contains(person){
                     myGroup.append(person)
                     tableView.reloadData()
+
                }
                 
             }
@@ -71,6 +72,19 @@ class GroupViewController: UIViewController {
 //
 //        })
         
+        
+        
+    }
+    @IBAction func logOut(_ sender: Any) {
+        do {
+            // 1
+            try Auth.auth().signOut()
+            self.dismiss(animated: true, completion: nil)
+        } catch (let error) {
+            // 2
+            print("Auth sign out failed: \(error)")
+        }
+
         
         
     }
