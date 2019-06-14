@@ -55,7 +55,7 @@ class FriendViewController: UIViewController {
 //
 //
 //            self?.loadDataRealm()
-
+//
 //            self?.tableView.reloadData()
 //            //print(Session.instance.token)
 //

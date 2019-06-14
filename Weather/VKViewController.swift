@@ -45,7 +45,8 @@ class VKViewController: UIViewController,WKNavigationDelegate {
             URLQueryItem(name: "client_id", value: "6973302"),
             URLQueryItem(name: "display", value: "mobile"),
             URLQueryItem(name: "redirect_uri", value: "https://oauth.vk.com/blank.html"),
-            URLQueryItem(name: "scope", value: "262150"),
+            //URLQueryItem(name: "scope", value: "262150"),
+            URLQueryItem(name: "scope", value: "friends,wall"),
             URLQueryItem(name: "response_type", value: "token"),
             URLQueryItem(name: "v", value: "5.68")
         ]
@@ -87,15 +88,15 @@ class VKViewController: UIViewController,WKNavigationDelegate {
 //        loadSessionToken()
         print(token)
         
-//        Alamofire.request("https://api.vk.com/method/groups.getCatalog?category_id=123424&subcategory_id&access_token=e49b3597439dde1b5bcdb9aa5163510a3754276eef8c6543c5cb77fccbd5cd98f687f312318e61c3af210&v=5.95").responseJSON { (response) in
+//        Alamofire.request("https://api.vk.com/method/wall.get?owner_id=3639061&count=20&filter=all&access_token=822a73b209319515335e9eb18faab29a3f08d014edc2c9a33b5eac768bd037b6daabb54967b90374701c9&v=5.95").responseJSON { (response) in
 //            print(response.value)
 //        }
 //
-//        Alamofire.request("https://api.vk.com/method/friends.get?user_id=3639061&order=hints&count=3&fields=domain,photo_50&name_case=ins&access_token=\(Session.instance.token)&v=5.95").responseJSON { (response) in
+//        Alamofire.request("https://api.vk.com/method/newsfeed.get?filters=post&count=1&access_token=1d948e24352f2d496a1d229a23ce720cba0087261f3da9101becebdaedce19716b654483e7a2314ceeb5b&v=5.95").responseJSON { (response) in
 //            print(response.value)
 //        }
 //
-//        Alamofire.request("https://api.vk.com/method/groups.get?user_id=3639061&count=3&extended=1&fields=city&access_token=3e207768840b779bd071d9041c2f882be1a551de6d1ff432927fecbd4a092bd0e0e56e47ef44a62632ba4&v=5.95").responseJSON { (response) in
+//        Alamofire.request("https://api.vk.com/method/groups.get?user_id=3639061&count=3&extended=1&fields=city&access_token=f8da33696dabd4b8c8602dc260b8fcf00f380b9a2ece4e62e2418fd212c25aa80597f3141e1d5369e7d80&v=5.95").responseJSON { (response) in
 //            print(response.value)
 //        }
         

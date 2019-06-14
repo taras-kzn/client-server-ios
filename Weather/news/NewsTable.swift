@@ -9,9 +9,14 @@
 import Foundation
 import UIKit
 
+
 struct NewsTable : Equatable {
     var name : String
     var imageAvatar : UIImage
     var text : String
     var imagePhoto : UIImage
 }
+
+
+
+

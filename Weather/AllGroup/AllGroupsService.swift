@@ -18,7 +18,7 @@ class AllGroupService  {
     func loadAllGroupData(token: String,completion: @escaping ([AllGroupArray]) -> Void ){
         let path = "/method/groups.getCatalog"
         let param : Parameters = [
-            "category_id": "1",
+            "category_id": "10",
             "access_token": token,
             "v": "5.95"
         ]

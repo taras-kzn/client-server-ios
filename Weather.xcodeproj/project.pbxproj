@@ -21,6 +21,7 @@
 		841E4F272236D14A0085A486 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841E4F262236D14A0085A486 /* File.swift */; };
 		841E4F2E22392AD10085A486 /* CALayerExstension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841E4F2D22392AD10085A486 /* CALayerExstension.swift */; };
 		842A654222418EBA00DB90F8 /* LikeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842A654122418EBA00DB90F8 /* LikeController.swift */; };
+		8432A8D022A1369400CEBC83 /* NewsRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8432A8CF22A1369400CEBC83 /* NewsRealm.swift */; };
 		84733E18227DABCE009D97CC /* VKViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84733E17227DABCE009D97CC /* VKViewController.swift */; };
 		8487B944225102F1003A088C /* FriendHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8487B943225102F1003A088C /* FriendHeader.swift */; };
 		848837A6225D15CF002A2A34 /* NewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848837A5225D15CF002A2A34 /* NewsViewController.swift */; };
@@ -31,7 +32,6 @@
 		84988CC5228EB690005B0926 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84988CC4228EB690005B0926 /* Group.swift */; };
 		84988CCA228EC20F005B0926 /* Save.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84988CC9228EC20F005B0926 /* Save.swift */; };
 		84988CCC228ED0E2005B0926 /* NewsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84988CCB228ED0E2005B0926 /* NewsService.swift */; };
-		84988CD0228ED10F005B0926 /* NewsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84988CCF228ED10F005B0926 /* NewsResponse.swift */; };
 		84A3762D2282F49400562BC3 /* Friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A3762C2282F49400562BC3 /* Friend.swift */; };
 		84A590D02252A2900065F2DE /* HeaderGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A590CF2252A2900065F2DE /* HeaderGroup.swift */; };
 		84DD8A90228429C90050F2C9 /* FriendsServec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84DD8A8F228429C90050F2C9 /* FriendsServec.swift */; };
@@ -61,6 +61,7 @@
 		841E4F262236D14A0085A486 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		841E4F2D22392AD10085A486 /* CALayerExstension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CALayerExstension.swift; sourceTree = "<group>"; };
 		842A654122418EBA00DB90F8 /* LikeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeController.swift; sourceTree = "<group>"; };
+		8432A8CF22A1369400CEBC83 /* NewsRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsRealm.swift; sourceTree = "<group>"; };
 		84733E17227DABCE009D97CC /* VKViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKViewController.swift; sourceTree = "<group>"; };
 		8487B943225102F1003A088C /* FriendHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendHeader.swift; sourceTree = "<group>"; };
 		848837A5225D15CF002A2A34 /* NewsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsViewController.swift; sourceTree = "<group>"; };
@@ -71,7 +72,6 @@
 		84988CC4228EB690005B0926 /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
 		84988CC9228EC20F005B0926 /* Save.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Save.swift; sourceTree = "<group>"; };
 		84988CCB228ED0E2005B0926 /* NewsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsService.swift; sourceTree = "<group>"; };
-		84988CCF228ED10F005B0926 /* NewsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsResponse.swift; sourceTree = "<group>"; };
 		84A3762C2282F49400562BC3 /* Friend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Friend.swift; sourceTree = "<group>"; };
 		84A590CF2252A2900065F2DE /* HeaderGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderGroup.swift; sourceTree = "<group>"; };
 		84DD8A8F228429C90050F2C9 /* FriendsServec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsServec.swift; sourceTree = "<group>"; };
@@ -147,8 +147,8 @@
 				848837A5225D15CF002A2A34 /* NewsViewController.swift */,
 				848837A7225D1AB0002A2A34 /* NewsTableViewCell.swift */,
 				848837A9225D2AEB002A2A34 /* NewsTable.swift */,
+				8432A8CF22A1369400CEBC83 /* NewsRealm.swift */,
 				84988CCB228ED0E2005B0926 /* NewsService.swift */,
-				84988CCF228ED10F005B0926 /* NewsResponse.swift */,
 			);
 			path = news;
 			sourceTree = "<group>";
@@ -412,7 +412,6 @@
 				84197BF5229FB9D4003091FC /* AllGoup.swift in Sources */,
 				84988CC3228EB5B3005B0926 /* GroupService.swift in Sources */,
 				848837AA225D2AEB002A2A34 /* NewsTable.swift in Sources */,
-				84988CD0228ED10F005B0926 /* NewsResponse.swift in Sources */,
 				841E4F232232E2C20085A486 /* PhotoViewController.swift in Sources */,
 				848B046B22704A9B00130154 /* Session.swift in Sources */,
 				84F9F6DB2229A30C000527D6 /* AppDelegate.swift in Sources */,
@@ -421,6 +420,7 @@
 				84197BF7229FBE56003091FC /* AllGroupsService.swift in Sources */,
 				84A3762D2282F49400562BC3 /* Friend.swift in Sources */,
 				84988CCC228ED0E2005B0926 /* NewsService.swift in Sources */,
+				8432A8D022A1369400CEBC83 /* NewsRealm.swift in Sources */,
 				841E4F272236D14A0085A486 /* File.swift in Sources */,
 				848837A6225D15CF002A2A34 /* NewsViewController.swift in Sources */,
 				84197C0A229FFA5A003091FC /* ChatTableViewCell.swift in Sources */,
@@ -577,7 +577,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2PQ8675BM6;
 				INFOPLIST_FILE = Weather/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -597,7 +597,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2PQ8675BM6;
 				INFOPLIST_FILE = Weather/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
