@@ -65,12 +65,14 @@ class GroupViewController: UIViewController {
        
 //        groupService.loadGroupData(idUser: userID, token: Session.instance.token, completion: { [weak self] groupArray in
 //            // сохраняем полученные данные в массиве, чтобы коллекция могла получить к ним доступ
-//            //self?.groupArray = (groupArray)
+////            self?.groupArray = (groupArray)
 //            self?.loadDataRealmGroups()
 //            self?.tableView.reloadData()
 //
 //
 //        })
+//        loadDataRealmGroups()
+//        tableView.reloadData()
         
         
         
@@ -89,13 +91,15 @@ class GroupViewController: UIViewController {
         
     }
     func loadDataRealmGroups() {
+        
         do{
+
             let realm = try Realm()
             let grops = realm.objects(GroupArray.self).filter("userIdName == %@", "3639061").sorted(byKeyPath: "gropuName")
             self.groupArray = Array(grops)
             token = grops.observe{ [weak self] changes in
                 switch changes {
-                    
+
                 case .initial:
                     self?.tableView.reloadData()
                 case .update(_, let deletions, let insertions, let modifications):
@@ -104,7 +108,7 @@ class GroupViewController: UIViewController {
                         self?.tableView.deleteRows(at: deletions.map({ IndexPath(row: $0, section: self!.groupArray.count)}),with: .automatic)
                         self?.tableView.reloadRows(at: modifications.map({ IndexPath(row: $0, section: self!.groupArray.count)}),with: .automatic)
                         print(deletions,modifications,insertions)
-                    
+
                     }, completion: {_ in
                         print("update")
                     })
@@ -113,13 +117,13 @@ class GroupViewController: UIViewController {
                     print(error)
                 }
                 print("изминения прошли")
-                
+
             }
-            
-            
+
+
         }catch{
             print("error")
-            
+
         }
     }
 }

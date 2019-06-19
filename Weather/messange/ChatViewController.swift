@@ -53,7 +53,7 @@ class ChatViewController: UIViewController,UITextFieldDelegate{
         }
         guard let data = messTextFildView.text, !data.isEmpty else {return}
         print(data)
-        docRef = coll.collection("messangUser").addDocument(data: ["messange" : messText]) {error in
+        docRef = coll.collection("messangUser").addDocument(data: ["wwww":"23456","messange" : messText, ]) {error in
             if let err = error {
                 print("Ошибка: \(err)")
             } else {
@@ -62,15 +62,39 @@ class ChatViewController: UIViewController,UITextFieldDelegate{
         }
         self.messTextFildView.resignFirstResponder()
         
-        docRef.getDocument { (docSnapshot, error) in
-            guard let document = docSnapshot, document.exists else {return}
-            let myData = document.data()
-            
-            let nameDate = myData!["messange"] as? String ?? ""
-            
-            self.textLabel.append("\(nameDate)")
-            self.tableView.reloadData()
+        
+        coll.collection("messangUser").getDocuments(){ (querySnapshot, err) in
+            if let err = err {
+                print("Error getting documents: \(err)")
+            } else {
+                var i=0;
+                for document in querySnapshot!.documents {
+                    i=i+1;
+                    //if (self.docRef!.documentID == document.documentID){
+                        print("\(document.documentID) => \(document.data())")
+                        var nameDate = document.data()["messange"] as? String ?? ""
+                        self.textLabel.append("\(document.data())"+"\(i)") //TODO
+//                    }
+                    
+                    
+                }
+                self.tableView.reloadData()
+            }
         }
+//        docRef.getDocument { (docSnapshot, error) in
+//            guard let document = docSnapshot, document.exists else {return}
+//            for document in docSnapshot!.documents {
+//                print("\(document.documentID) => \(document.data())")
+//            }
+//            let myData = document.data()
+//            print(myData)
+//
+//            let nameDate = myData!["messange"] as? String ?? ""
+//
+//
+//            self.textLabel.append("\(nameDate)")
+//            self.tableView.reloadData()
+//        }
     }
     
 
