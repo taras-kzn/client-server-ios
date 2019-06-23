@@ -200,6 +200,7 @@
 			children = (
 				84F9F6DE2229A30C000527D6 /* Main.storyboard */,
 				84733E17227DABCE009D97CC /* VKViewController.swift */,
+				84F9F730223128B2000527D6 /* AllGroup */,
 				84197C03229FF88B003091FC /* messange */,
 				84988CC6228EC1D0005B0926 /* save */,
 				848B046922704A4400130154 /* Singleton */,
@@ -208,7 +209,6 @@
 				841E4F212232DFA40085A486 /* FotoFriend */,
 				841E4F1C223275990085A486 /* Friend */,
 				84F9F7372231407C000527D6 /* Group */,
-				84F9F730223128B2000527D6 /* AllGroup */,
 				84F9F6DA2229A30C000527D6 /* AppDelegate.swift */,
 				84F9F6E12229A30D000527D6 /* Assets.xcassets */,
 				84F9F6E32229A30D000527D6 /* LaunchScreen.storyboard */,

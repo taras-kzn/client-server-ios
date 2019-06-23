@@ -45,8 +45,8 @@ class VKViewController: UIViewController,WKNavigationDelegate {
             URLQueryItem(name: "client_id", value: "6973302"),
             URLQueryItem(name: "display", value: "mobile"),
             URLQueryItem(name: "redirect_uri", value: "https://oauth.vk.com/blank.html"),
-            //URLQueryItem(name: "scope", value: "262150"),
-            URLQueryItem(name: "scope", value: "friends,wall"),
+            URLQueryItem(name: "scope", value: "262150"),
+            //URLQueryItem(name: "scope", value: "friends,wall"),
             URLQueryItem(name: "response_type", value: "token"),
             URLQueryItem(name: "v", value: "5.68")
         ]
@@ -83,9 +83,9 @@ class VKViewController: UIViewController,WKNavigationDelegate {
         }
         
         let token = params["access_token"]
-        //Session.instance.token = token!
+        Session.instance.token = token!
         KeychainWrapper.standard.set(token!, forKey: "token")
-//        loadSessionToken()
+        loadSessionToken()
         print(token)
         
 //        Alamofire.request("https://api.vk.com/method/wall.get?owner_id=3639061&count=20&filter=all&access_token=822a73b209319515335e9eb18faab29a3f08d014edc2c9a33b5eac768bd037b6daabb54967b90374701c9&v=5.95").responseJSON { (response) in
@@ -96,7 +96,7 @@ class VKViewController: UIViewController,WKNavigationDelegate {
 //            print(response.value)
 //        }
 //
-//        Alamofire.request("https://api.vk.com/method/groups.get?user_id=3639061&count=3&extended=1&fields=city&access_token=f8da33696dabd4b8c8602dc260b8fcf00f380b9a2ece4e62e2418fd212c25aa80597f3141e1d5369e7d80&v=5.95").responseJSON { (response) in
+//        Alamofire.request("https://api.vk.com/method/groups.get?user_id=3639061&count=3&extended=1&fields=city&access_token=71573db4d5b39a19f92389f23fbe35fdfdca909c4bd0f29b2329c14599d4edddcc24b4c84226f053459d9&v=5.95").responseJSON { (response) in
 //            print(response.value)
 //        }
         
