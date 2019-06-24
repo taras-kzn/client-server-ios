@@ -49,19 +49,20 @@ class FriendViewController: UIViewController {
         definesPresentationContext = true
         tableView .register(FriendHeader.self, forHeaderFooterViewReuseIdentifier: "header")
         
+        loadDataRealm()
+
 //        friendServerc.loadFriendsData(userId: userID,token: Session.instance.token){ [weak self]  in
 //            // сохраняем полученные данные в массиве, чтобы коллекция могла получить к ним доступ
 //            //self?.friendsArray = (friendsArray)
 //
 //
-//            self?.loadDataRealm()
+//            //self?.loadDataRealm()
 //
-//            self?.tableView.reloadData()
+//            //self?.tableView.reloadData()
 //            //print(Session.instance.token)
 //
 //        }
 
-        loadDataRealm()
         
         
         mapFriends = map(friends: self.friendsArray)
@@ -70,7 +71,6 @@ class FriendViewController: UIViewController {
         userDefaulsSave()
         loadStringUserDefauls()
         loadSessionToken()
-        
         tableView.reloadData()
 
 
@@ -81,6 +81,8 @@ class FriendViewController: UIViewController {
        
     }
     func loadDataRealm(){
+  
+        
         do{
             let realm = try Realm()
             let friends = realm.objects(FriendsArray.self).filter("uesrIdName == %@","3639061")
@@ -110,7 +112,7 @@ class FriendViewController: UIViewController {
 
         }catch{
             print("error")
-            
+
         }
     }
     

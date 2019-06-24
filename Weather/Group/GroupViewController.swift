@@ -67,12 +67,13 @@ class GroupViewController: UIViewController {
 //            // сохраняем полученные данные в массиве, чтобы коллекция могла получить к ним доступ
 ////            self?.groupArray = (groupArray)
 //            self?.loadDataRealmGroups()
-//            self?.tableView.reloadData()
+//            //self?.tableView.reloadData()
 //
 //
 //        })
 //        loadDataRealmGroups()
 //        tableView.reloadData()
+
         
         
         
@@ -97,6 +98,7 @@ class GroupViewController: UIViewController {
             let realm = try Realm()
             let grops = realm.objects(GroupArray.self).filter("userIdName == %@", "3639061").sorted(byKeyPath: "gropuName")
             self.groupArray = Array(grops)
+            print(realm.configuration.fileURL)
             token = grops.observe{ [weak self] changes in
                 switch changes {
 
@@ -150,17 +152,36 @@ extension GroupViewController : UITableViewDataSource{
         
         let groups = groupArray[indexPath.row]
         cell.groupName.text = groups.gropuName
-        let queue = DispatchQueue.global(qos: .utility)
-        let imageURL = NSURL(string: groups.imageGroup)
-        queue.async {
-            if let data = try? Data(contentsOf: imageURL as! URL ){
-                DispatchQueue.main.async {
-                    cell.photoCell.image = UIImage(data: data)
-                    
-                }
-            }
-            
+        var image = [UIImage]()
+        let allCgoupImage = DispatchGroup()
+        allCgoupImage.enter()
+
+        asyncLoadImage(imageUrl: URL(string: groups.imageGroup)!,
+                       runQueue: .global(),
+                       complictionQueue: .main) { (result, error) in
+                        guard let image1 = result else {return}
+                        image.append(image1)
+                        allCgoupImage.leave()
         }
+
+
+        allCgoupImage.notify(queue: .main) {
+            cell.photoCell.image = image[0]
+
+        }
+
+        
+//        let queue = DispatchQueue.global(qos: .utility)
+//        let imageURL = NSURL(string: groups.imageGroup)
+//        queue.async {
+//            if let data = try? Data(contentsOf: imageURL as! URL ){
+//                DispatchQueue.main.async {
+//                    cell.photoCell.image = UIImage(data: data)
+//
+//                }
+//            }
+//
+//        }
         return cell
     }
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath){
@@ -170,8 +191,20 @@ extension GroupViewController : UITableViewDataSource{
         }
         
     }
-  
- 
-   
+    func asyncLoadImage(imageUrl: URL,runQueue: DispatchQueue,complictionQueue: DispatchQueue,complition: @escaping (UIImage?,Error?)-> ()){
+        runQueue.async {
+            do {
+                let data = try Data(contentsOf: imageUrl)
+                complictionQueue.async {
+                    complition(UIImage(data: data),nil)
+                }
+            } catch let error {
+                complictionQueue.async {
+                    complition(nil,error)
+                }
+            }
+        }
+    }
+
 }
 

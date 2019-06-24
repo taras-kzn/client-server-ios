@@ -35,19 +35,37 @@ class AllGroupService  {
         
     }
     func saveAllGroupData(_ grops: [AllGroupArray]){
-        do{
-            let realm = try Realm()
-            let oldGrops = realm.objects(AllGroupArray.self)
-            realm.beginWrite()
-            realm.delete(oldGrops)
-            realm.add(grops)
-            try realm.commitWrite()
-            print(realm.configuration.fileURL)
-            
-        }catch{
-            print("error")
-            
+        let queue = DispatchQueue.global(qos: .utility)
+        queue.async {
+            do{
+                let realm = try Realm()
+                let oldGrops = realm.objects(AllGroupArray.self)
+                realm.beginWrite()
+                realm.delete(oldGrops)
+                realm.add(grops)
+                try realm.commitWrite()
+                print(realm.configuration.fileURL)
+
+            }catch{
+                print("error")
+
+            }
         }
+//        do{
+//            let realm = try Realm()
+//            let oldGrops = realm.objects(AllGroupArray.self)
+//            realm.beginWrite()
+//            realm.delete(oldGrops)
+//            realm.add(grops)
+//            try realm.commitWrite()
+//            print(realm.configuration.fileURL)
+//
+//        }catch{
+//            print("error")
+//
+//        }
+
+  
         
     }
     

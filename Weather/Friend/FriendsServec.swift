@@ -15,11 +15,6 @@ import RealmSwift
 class FriendServic {
     // базовый URL сервиса
     let baseUrl = "https://api.vk.com"
-    // ключ для доступа к сервису
-    
-    
-//    let apiKey  =  "46b726ceefcff6554885d9c8556cbc9afa7e2ef51abfb8ac300ab14879053661bbf26d3e92af80f6d3e97"
-    
     
     func loadFriendsData(userId: String,token: String,completion: @escaping () -> Void ){
         let path = "/method/friends.get"
@@ -53,17 +48,33 @@ class FriendServic {
        
     }
     func saveFriendsData(_ friends: [FriendsArray], userId: String ){
-        do {
-            let realm = try Realm()
-            let oldFriends = realm.objects(FriendsArray.self).filter("uesrIdName == %@", userId )
-            realm.beginWrite()
-            realm.delete(oldFriends)
-            realm.add(friends)
-            try realm.commitWrite()
-            print(realm.configuration.fileURL)
-        }catch{
-            print(error)
+
+        let queue = DispatchQueue.global(qos:.utility)
+        queue.async {
+            do {
+                let realm = try Realm()
+                let oldFriends = realm.objects(FriendsArray.self).filter("uesrIdName == %@", userId )
+                realm.beginWrite()
+                realm.delete(oldFriends)
+                realm.add(friends)
+                try realm.commitWrite()
+                print(realm.configuration.fileURL)
+            }catch{
+                print(error)
+            }
         }
+//        do {
+//            let realm = try Realm()
+//            let oldFriends = realm.objects(FriendsArray.self).filter("uesrIdName == %@", userId )
+//            realm.beginWrite()
+//            realm.delete(oldFriends)
+//            realm.add(friends)
+//            try realm.commitWrite()
+//            print(realm.configuration.fileURL)
+//        }catch{
+//            print(error)
+//        }
+
     }
    
 }
