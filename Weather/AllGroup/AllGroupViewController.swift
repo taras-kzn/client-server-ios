@@ -55,15 +55,16 @@ class AllGroupViewController: UIViewController {
         
 
         loadDataRealmAllGroups()
+    
         tableView.reloadData()
-//        allGroupService.loadAllGroupData(token: Session.instance.token) { [weak self] allGroupArray  in
+//        allGroupService.loadAllGroupData(token: Session.instance.token,completion: { [weak self] allGroupArray  in
 //
 //            //self?.allGroupArray = (allGroupArray)
 //            self?.loadDataRealmAllGroups()
 //            self?.tableView.reloadData()
 //
 //
-//        }
+//        })
 //        print(allGroupArray)
         
         
@@ -97,10 +98,13 @@ class AllGroupViewController: UIViewController {
         tableView.reloadData()
     }
     func loadDataRealmAllGroups() {
+        
         do{
             let realm = try Realm()
             let grops = realm.objects(AllGroupArray.self)
             self.allGroupArray = Array(grops)
+            
+        
             
             
         }catch{

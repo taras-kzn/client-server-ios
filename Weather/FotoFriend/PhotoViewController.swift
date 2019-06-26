@@ -27,7 +27,7 @@ class PhotoViewController: UIViewController {
         
         userDefaulsSave()
         loadStringUserDefauls()
-        loadSessionToken()
+ //       loadSessionToken()
 
         
 //        friendServiceCoolection.loadFriendsData(userId: userID, token: Session.instance.token) { [weak self] friendsArray in

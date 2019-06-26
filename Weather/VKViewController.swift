@@ -45,8 +45,8 @@ class VKViewController: UIViewController,WKNavigationDelegate {
             URLQueryItem(name: "client_id", value: "6973302"),
             URLQueryItem(name: "display", value: "mobile"),
             URLQueryItem(name: "redirect_uri", value: "https://oauth.vk.com/blank.html"),
-            URLQueryItem(name: "scope", value: "262150"),
-            //URLQueryItem(name: "scope", value: "friends,wall"),
+            //URLQueryItem(name: "scope", value: "262150"),
+            URLQueryItem(name: "scope", value: "friends,wall"),
             URLQueryItem(name: "response_type", value: "token"),
             URLQueryItem(name: "v", value: "5.68")
         ]
@@ -92,7 +92,7 @@ class VKViewController: UIViewController,WKNavigationDelegate {
 //            print(response.value)
 //        }
 //
-//        Alamofire.request("https://api.vk.com/method/newsfeed.get?filters=post&count=1&access_token=1d948e24352f2d496a1d229a23ce720cba0087261f3da9101becebdaedce19716b654483e7a2314ceeb5b&v=5.95").responseJSON { (response) in
+//        Alamofire.request("https://api.vk.com/method/newsfeed.get?filters=post&count=1&access_token=38f22a99402302aff6555b40781c1737d49e0ff75379e65fb5d20e6b37daea2bdb55d804bf573845b8a39&v=5.95").responseJSON { (response) in
 //            print(response.value)
 //        }
 //

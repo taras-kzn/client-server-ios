@@ -23,24 +23,22 @@ class NewsResponse: Decodable {
 }
 
 class NewsItems: Decodable {
-    let items: [NewsArray]
+    let items: [NewsArray] 
     let groups: [GroupsNewsArray]
 }
 class NewsArray: Object, Decodable {
     @objc dynamic var newsId = 0.0
     @objc dynamic var date = 0.0
     @objc dynamic var text = ""
-    //@objc static var photo = ""
-    @objc dynamic var photoType = ""
-    @objc dynamic var image = ""
+    var size : [SizeImage] = []
+    @objc dynamic var video = ""
+
     @objc dynamic var comments = 0
     @objc dynamic var like = 0
     @objc dynamic var repost = 0
     @objc dynamic var views = 0
     
-//    enum UserIdName: String{
-//        case idAdel = "3639061"
-//    }
+
         enum CodingKeys: String,CodingKey {
             case source_id
             case date = "date"
@@ -54,12 +52,16 @@ class NewsArray: Object, Decodable {
         enum AttachmentsKeys: String,CodingKey {
             case photo
             case sizes
-
+            case video
+            case photo_320
         }
-        enum ImageKeys: String,CodingKey{
-            case type
-            case url
-        }
+//        enum VideoKeys: String,CodingKey {
+//            case photo_320
+//        }
+//        enum ImageKeys: String,CodingKey{
+//            case type
+//            case url
+//        }
         enum CommentsKeys: String,CodingKey {
             case count
         }
@@ -75,6 +77,8 @@ class NewsArray: Object, Decodable {
     
     convenience required init(from decoder: Decoder) throws {
         self.init()
+
+        
         
         let valuse = try decoder.container(keyedBy: CodingKeys.self)
         self.newsId = try valuse.decode(Double.self, forKey: .source_id)
@@ -83,11 +87,21 @@ class NewsArray: Object, Decodable {
         
         var attachmentsValues = try valuse.nestedUnkeyedContainer(forKey: .attachments)
         let firstAttachmentsValues = try attachmentsValues.nestedContainer(keyedBy: AttachmentsKeys.self)
-        let photoValues = try firstAttachmentsValues.nestedContainer(keyedBy: AttachmentsKeys.self, forKey: .photo)
-        var sizeValue = try photoValues.nestedUnkeyedContainer(forKey: .sizes )
-        let firstImge = try sizeValue.nestedContainer(keyedBy: ImageKeys.self)
-        self.photoType = try firstImge.decode(String.self, forKey: .type)
-        self.image = try firstImge.decode(String.self, forKey: .url)
+        let photoValues = try? firstAttachmentsValues.nestedContainer(keyedBy: AttachmentsKeys.self, forKey: .photo)
+        self.size = try photoValues?.decode([SizeImage].self, forKey: .sizes) ?? []
+//        let twoAttachmentsValues = try attachmentsValues.nestedContainer(keyedBy: AttachmentsKeys.self)
+        let imageVideo = try? firstAttachmentsValues.nestedContainer(keyedBy: AttachmentsKeys.self, forKey: .video)
+        self.video = try imageVideo?.decode(String.self, forKey: .photo_320) ?? ""
+
+        
+        
+    
+        
+       
+//
+//        let firstImge = try sizeValue.nestedContainer(keyedBy: ImageKeys.self)
+//        self.photoType = try firstImge.decode(String.self, forKey: .type)
+//        self.image = try firstImge.decode(String.self, forKey: .url)
         
         let commentsValue = try valuse.nestedContainer(keyedBy: CommentsKeys.self, forKey: .comments)
         self.comments = try commentsValue.decode(Int.self, forKey: .count)
@@ -124,6 +138,22 @@ class GroupsNewsArray: Object,Decodable {
         self.groupId = try values.decode(Double.self, forKey: .id)
         self.gropuName = try values.decode(String.self, forKey: .name)
         self.imageGroup = try values.decode(String.self, forKey: .photo_50)
+    }
+}
+class SizeImage: Object,Decodable {
+    @objc dynamic var type = ""
+    @objc dynamic var url = ""
+    
+    enum CodingKeys: String,CodingKey {
+        case type
+        case url
+    }
+    convenience required init (from decoder: Decoder) throws {
+        self.init()
+        let values = try? decoder.container(keyedBy: CodingKeys.self)
+        self.type = try values?.decode(String.self, forKey: .type) ?? ""
+        self.url = try values?.decode(String.self, forKey: .url) ?? ""
+
     }
 }
 

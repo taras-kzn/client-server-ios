@@ -31,7 +31,7 @@ class GroupArray: Object, Decodable {
             case adel
         }
         enum UserIdName: String {
-            case adelId = "3639061"
+            case adelId = "3559315"
         }
     convenience required init (from decoder: Decoder) throws {
         self.init()
