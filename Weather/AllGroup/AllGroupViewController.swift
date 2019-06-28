@@ -55,7 +55,7 @@ class AllGroupViewController: UIViewController {
         
 
         loadDataRealmAllGroups()
-    
+
         tableView.reloadData()
 //        allGroupService.loadAllGroupData(token: Session.instance.token,completion: { [weak self] allGroupArray  in
 //
