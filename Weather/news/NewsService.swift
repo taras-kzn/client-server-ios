@@ -11,11 +11,10 @@ import RealmSwift
 import Alamofire
 import UIKit
 
-class NewsService {
+final class NewsService {
     // базовый URL сервиса
     let baseUrl = "https://api.vk.com"
     // ключ для доступа к сервису
-
     func loadNewsData(token: String,completion: @escaping () -> Void ){
         let path = "/method/newsfeed.get"
         let parameters: Parameters = [
@@ -24,7 +23,6 @@ class NewsService {
             "access_token": token,
             "v": "5.95"
         ]
-        
         // составляем URL из базового адреса сервиса и конкретного пути к ресурсу
         let url = baseUrl+path
 
@@ -60,23 +58,18 @@ class NewsService {
                                 one.imageGroup = g.imageGroup
                             }
                         }
-                        
                     }
-                    
                 }
             }
 
-
             print(array)
-
             self.saveNewsData(array,newsGroup,oneArray)
-            
             completion()
-            
         }
-        
     }
+    
     func saveNewsData(_ news: [NewsArray],_ newsGroup: [GroupsNewsArray],_ oneArray: [NewsTable]){
+        
         let queu = DispatchQueue.global(qos: .utility)
         do {
             let realm = try Realm()
@@ -89,9 +82,7 @@ class NewsService {
             realm.delete(newsArray)
             realm.add(news)
             realm.add(newsGroup)
-            //realm.add(sizeArray)
             realm.add(oneArray)
-            
             try realm.commitWrite()
             print(realm.configuration.fileURL)
         }catch{

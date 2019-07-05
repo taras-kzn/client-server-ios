@@ -11,12 +11,11 @@ import FirebaseAuth
 import FirebaseFirestore
 import Firebase
 
-class ChatViewController: UIViewController,UITextFieldDelegate{
+final class ChatViewController: UIViewController,UITextFieldDelegate{
     
-
-    var docRef: DocumentReference!
-    var coll = Firestore.firestore()
-    var textLabel = [String]()
+    private var docRef: DocumentReference!
+    private var coll = Firestore.firestore()
+    private var textLabel = [String]()
     
     @IBOutlet weak var messTextFildView: UITextView!
     @IBOutlet weak var tableView: UITableView!
@@ -29,25 +28,23 @@ class ChatViewController: UIViewController,UITextFieldDelegate{
         tableView.estimatedRowHeight = 44.0
         tableView.translatesAutoresizingMaskIntoConstraints = false
         messTextFildView.layer.cornerRadius = 10
-        
         docRef = coll.collection("userMessage").document("meesange")
-        
         
         NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: nil) { (nc) in
             self.view.frame.origin.y = -200
-            
-            
         }
+        
         NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: nil) { (nc) in
             self.view.frame.origin.y = 0.0
         }
-        
 
         tableView.register(UINib(nibName: "ChatTableViewCell", bundle: nil), forCellReuseIdentifier: "Chat")
 
     
     }
+    
     @IBAction func pushBuut(_ sender: Any) {
+        
         guard let messText = messTextFildView.text, !messText.isEmpty else {
             return
         }
@@ -62,7 +59,6 @@ class ChatViewController: UIViewController,UITextFieldDelegate{
         }
         self.messTextFildView.resignFirstResponder()
         
-        
         coll.collection("messangUser").getDocuments(){ (querySnapshot, err) in
             if let err = err {
                 print("Error getting documents: \(err)")
@@ -75,37 +71,19 @@ class ChatViewController: UIViewController,UITextFieldDelegate{
                         var nameDate = document.data()["messange"] as? String ?? ""
                         self.textLabel.append(nameDate) //TODO
                    }
-                    
-                    
                 }
                 self.tableView.reloadData()
             }
         }
-//        docRef.getDocument { (docSnapshot, error) in
-//            guard let document = docSnapshot, document.exists else {return}
-//            for document in docSnapshot!.documents {
-//                print("\(document.documentID) => \(document.data())")
-//            }
-//            let myData = document.data()
-//            print(myData)
-//
-//            let nameDate = myData!["messange"] as? String ?? ""
-//
-//
-//            self.textLabel.append("\(nameDate)")
-//            self.tableView.reloadData()
-//        }
     }
-    
-
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.messTextFildView.resignFirstResponder()
     }
-
-
 }
+
 extension ChatViewController: UITableViewDelegate,UITableViewDataSource{
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return textLabel.count
     }
@@ -119,9 +97,6 @@ extension ChatViewController: UITableViewDelegate,UITableViewDataSource{
         cell.mesangeView.layer.cornerRadius = 15
         cell.mesangeView.layer.shadowOpacity = 0.5
         return cell
-
     }
-    
-    
-    
+
 }

@@ -8,8 +8,7 @@
 
 import UIKit
 
-class FriendTableViewCell: UITableViewCell {
-
+final class FriendTableViewCell: UITableViewCell {
 
     @IBOutlet weak var viewPhotoCell: UIView!
     @IBOutlet weak var photoCell: UIImageView!
@@ -17,9 +16,6 @@ class FriendTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-        
     }
 
-   
 }

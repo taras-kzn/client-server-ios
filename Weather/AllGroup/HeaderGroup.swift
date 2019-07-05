@@ -8,21 +8,19 @@
 
 import UIKit
 
-class HeaderGroup: UITableViewHeaderFooterView {
+final class HeaderGroup: UITableViewHeaderFooterView {
     
     var label = UILabel(frame: .zero)
-    
-    //это делать тогда когда делаем из xiba или через сторбод
-    //override func awakeFromNib() {
-    //  setup()
-    //}
-    
+
     override init(reuseIdentifier: String?) {
+        
         super .init(reuseIdentifier: reuseIdentifier)
         addSubview(label)
         setup()
     }
+    
     override func layoutSubviews() {
+        
         super.layoutSubviews()
         label.frame = bounds
         
@@ -32,6 +30,7 @@ class HeaderGroup: UITableViewHeaderFooterView {
         super .init(coder: aDecoder)
         setup()
     }
+    
     private func setup(){
         addSubview(label)
     }

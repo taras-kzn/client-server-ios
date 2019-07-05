@@ -8,31 +8,20 @@
 
 import UIKit
 
-class AllGroupViewCell: UITableViewCell {
-
-
+final class AllGroupViewCell: UITableViewCell {
 
     @IBOutlet weak var photoCell: UIImageView!
     @IBOutlet weak var groupName: UILabel!
-    
-
     @IBOutlet weak var viewPhotoCell: UIView!
     
-    func setPerson(_ person: PersonGroup){
+    private func setPerson(_ person: PersonGroup){
         self.groupName.text = person.name
         self.photoCell.image = person.photo
     }
     
-   
-    
-    
     override func awakeFromNib() {
-            super.awakeFromNib()
         
-       
-    
+            super.awakeFromNib()
     }
-   
-   
-    
+
 }

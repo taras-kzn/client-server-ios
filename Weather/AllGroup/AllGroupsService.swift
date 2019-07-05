@@ -11,11 +11,11 @@ import UIKit
 import Alamofire
 import RealmSwift
 
-class AllGroupService  {
+final class AllGroupService  {
+    
     let baseUrl = "https://api.vk.com"
     
-    
-    func loadAllGroupData(token: String,completion: @escaping ([AllGroupArray]) -> Void ){
+    func loadAllGroupData(token: String,completion: @escaping () -> Void ){
         let path = "/method/groups.getCatalog"
         let param : Parameters = [
             "category_id": "10",
@@ -29,46 +29,26 @@ class AllGroupService  {
             let allGroup = try! JSONDecoder().decode(AllGroupResponse.self, from: data).response
             var array = allGroup.items
             self.saveAllGroupData(array)
-            completion(array)
-            
+            completion()
         }
-        
-    }
-    func saveAllGroupData(_ grops: [AllGroupArray]){
-        let queue = DispatchQueue.global(qos: .utility)
-        queue.async {
-            do{
-                let realm = try Realm()
-                let oldGrops = realm.objects(AllGroupArray.self)
-                realm.beginWrite()
-                realm.delete(oldGrops)
-                realm.add(grops)
-                try realm.commitWrite()
-                print(realm.configuration.fileURL)
-
-            }catch{
-                print("error")
-
-            }
-        }
-//        do{
-//            let realm = try Realm()
-//            let oldGrops = realm.objects(AllGroupArray.self)
-//            realm.beginWrite()
-//            realm.delete(oldGrops)
-//            realm.add(grops)
-//            try realm.commitWrite()
-//            print(realm.configuration.fileURL)
-//
-//        }catch{
-//            print("error")
-//
-//        }
-
-  
         
     }
     
+    func saveAllGroupData(_ grops: [AllGroupArray]){
+        
+        do{
+            let realm = try Realm()
+            let oldGrops = realm.objects(AllGroupArray.self)
+            realm.beginWrite()
+            realm.delete(oldGrops)
+            realm.add(grops)
+            try realm.commitWrite()
+            print(realm.configuration.fileURL)
+        }catch{
+            print("error")
+        }
+
+    }
     
 }
 

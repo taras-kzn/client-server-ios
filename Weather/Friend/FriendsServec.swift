@@ -12,7 +12,7 @@ import UIKit
 import RealmSwift
 
 
-class FriendServic {
+final class FriendServic {
     // базовый URL сервиса
     let baseUrl = "https://api.vk.com"
     
@@ -26,10 +26,8 @@ class FriendServic {
             "access_token": token,
             "v": "5.95"
         ]
-        
         // составляем URL из базового адреса сервиса и конкретного пути к ресурсу
         let url = baseUrl+path
-        
         //делаем запрос
 //        Alamofire.request(url, method: .get, parameters: parameters).responseJSON { repsonse in
 //            print(repsonse.value)
@@ -41,40 +39,24 @@ class FriendServic {
             var array = friend.items
             array.forEach {$0.uesrIdName = userId}
             self.saveFriendsData(array, userId: userId)
-            
             completion()
-            
         }
        
     }
+    
     func saveFriendsData(_ friends: [FriendsArray], userId: String ){
-
-        let queue = DispatchQueue.global(qos:.utility)
-        queue.async {
-            do {
-                let realm = try Realm()
-                let oldFriends = realm.objects(FriendsArray.self).filter("uesrIdName == %@", userId )
-                realm.beginWrite()
-                realm.delete(oldFriends)
-                realm.add(friends)
-                try realm.commitWrite()
-                print(realm.configuration.fileURL)
-            }catch{
-                print(error)
-            }
+        
+        do {
+            let realm = try Realm()
+            let oldFriends = realm.objects(FriendsArray.self).filter("uesrIdName == %@", userId )
+            realm.beginWrite()
+            realm.delete(oldFriends)
+            realm.add(friends)
+            try realm.commitWrite()
+            print(realm.configuration.fileURL)
+        }catch{
+            print(error)
         }
-//        do {
-//            let realm = try Realm()
-//            let oldFriends = realm.objects(FriendsArray.self).filter("uesrIdName == %@", userId )
-//            realm.beginWrite()
-//            realm.delete(oldFriends)
-//            realm.add(friends)
-//            try realm.commitWrite()
-//            print(realm.configuration.fileURL)
-//        }catch{
-//            print(error)
-//        }
-
     }
    
 }
