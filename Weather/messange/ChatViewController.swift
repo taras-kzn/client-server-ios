@@ -70,11 +70,11 @@ class ChatViewController: UIViewController,UITextFieldDelegate{
                 var i=0;
                 for document in querySnapshot!.documents {
                     i=i+1;
-                    //if (self.docRef!.documentID == document.documentID){
+                    if (self.docRef!.documentID == document.documentID){
                         print("\(document.documentID) => \(document.data())")
                         var nameDate = document.data()["messange"] as? String ?? ""
-                        self.textLabel.append("\(document.data())"+"\(i)") //TODO
-//                    }
+                        self.textLabel.append(nameDate) //TODO
+                   }
                     
                     
                 }
@@ -112,7 +112,8 @@ extension ChatViewController: UITableViewDelegate,UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Chat", for: indexPath) as! ChatTableViewCell
-        cell.messangeLabel.text = textLabel[0]
+        var mess = textLabel[indexPath.row]
+        cell.messangeLabel.text = mess
         cell.messangeLabel.layer.cornerRadius = 10
         cell.messangeLabel.layer.masksToBounds = true
         cell.mesangeView.layer.cornerRadius = 15
