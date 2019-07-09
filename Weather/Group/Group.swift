@@ -10,35 +10,42 @@ import Foundation
 import UIKit
 import RealmSwift
 
-class GroupResponse: Decodable {
+final class GroupResponse: Decodable {
+    
     let response : ItemsGroup
 }
 
-class ItemsGroup:  Decodable {
+final class ItemsGroup:  Decodable {
+    
     let items : [GroupArray]
 }
 
-class GroupArray: Object, Decodable {
+final class GroupArray: Object, Decodable {
+    
     @objc dynamic var gropuName = ""
     @objc dynamic var imageGroup = ""
     @objc dynamic var userName = ""
     @objc dynamic var userIdName = ""
-        enum CodingKeys: String,CodingKey{
+    
+        private enum CodingKeys: String,CodingKey{
             case name
             case photo_50
         }
-        enum UserName: String {
+    
+        private enum UserName: String {
             case adel
         }
-        enum UserIdName: String {
+    
+        private enum UserIdName: String {
             case adelId = "3559315"
         }
+    
     convenience required init (from decoder: Decoder) throws {
         self.init()
+        
         let values = try decoder.container(keyedBy: CodingKeys.self)
         self.gropuName = try values.decode(String.self, forKey: .name)
         self.imageGroup = try values.decode(String.self, forKey: .photo_50)
-        
         self.userName = UserName.adel.rawValue
         self.userIdName = UserIdName.adelId.rawValue
     }

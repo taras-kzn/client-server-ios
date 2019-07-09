@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 
 struct PersonGroup : Equatable{
+    
     var photo : UIImage
     let name : String
 }

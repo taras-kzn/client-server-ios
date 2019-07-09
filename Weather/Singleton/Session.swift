@@ -9,10 +9,9 @@
 import UIKit
 
 
-class Session{
+final class Session{
     
     static let instance = Session()
-    
     private init() {}
     
     var token : String = ""

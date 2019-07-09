@@ -11,7 +11,8 @@ import UIKit
 import RealmSwift
 
 
-class NewsTable: Object  {
+final class NewsTable: Object  {
+    
     @objc dynamic var newsId : Double = 0.0
     @objc dynamic var date : Double = 0.0
     @objc dynamic var text : String = ""

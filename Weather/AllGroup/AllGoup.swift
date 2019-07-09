@@ -10,27 +10,28 @@ import Foundation
 import RealmSwift
 import UIKit
 
-class AllGroupResponse: Decodable {
+final class AllGroupResponse: Decodable {
     
     let response : ItemsAllGroup
 }
 
-class ItemsAllGroup:  Decodable {
+final class ItemsAllGroup:  Decodable {
+    
     let items : [AllGroupArray]
 }
 
-class AllGroupArray: Object, Decodable {
+final class AllGroupArray: Object, Decodable {
     
     @objc dynamic var allGroupName = ""
     @objc dynamic var allGroupImage = ""
-
     
-    enum CodingKeys: String, CodingKey {
+    private enum CodingKeys: String, CodingKey {
         case name
         case photo_50
     }
 
     convenience required init (from decoder: Decoder) throws {
+        
         self.init()
         let values = try decoder.container(keyedBy: CodingKeys.self)
         self.allGroupName = try values.decode(String.self, forKey: .name)

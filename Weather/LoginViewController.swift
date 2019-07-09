@@ -10,8 +10,7 @@ import UIKit
 import FirebaseAuth
 
 
-class LoginViewController: UIViewController {
-
+final class LoginViewController: UIViewController {
 
     @IBOutlet weak var loginLabel: UILabel!
     @IBOutlet weak var weatherLabel: UILabel!
@@ -22,24 +21,16 @@ class LoginViewController: UIViewController {
     
     var listener: AuthStateDidChangeListenerHandle?
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-  //      animateAuthButton()
         animateTitlesAppearing()
         animationWeather()
-        
         let hideKeyboardGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
-        
         scrollView?.addGestureRecognizer(hideKeyboardGesture)
-
         
     }
     
-    
-
     @IBAction func singIn(_ sender: Any) {
         guard let email = loginInput.text,
         let password = passwordInput.text,
@@ -52,18 +43,14 @@ class LoginViewController: UIViewController {
             if let error = error,user  == nil {
                 self.showLoginError(titel: "Error", message: error.localizedDescription)
             }
-            
         }
     }
     
     @IBAction func singUp(_ sender: Any) {
-        
-        
-        // 1
+
         let alert = UIAlertController(title: "Register",
                                       message: "Register",
                                       preferredStyle: .alert)
-        // 2
         alert.addTextField { textEmail in
             textEmail.placeholder = "Введите адрес электронной почты"
         }
@@ -71,47 +58,27 @@ class LoginViewController: UIViewController {
             textPassword.isSecureTextEntry = true
             textPassword.placeholder = "Введите ваш пароль"
         }
-        // 3
         let cancelAction = UIAlertAction(title: "Cancel",
                                          style: .cancel)
-        
-        
-        // 4
         let saveAction = UIAlertAction(title: "Save", style: .default) { _ in
-            // 4.1
+
             guard let emailField = alert.textFields?[0],
                 let passwordField = alert.textFields?[1],
                 let password = passwordField.text,
                 let email = emailField.text else { return }
-            // 4.2
             Auth.auth().createUser(withEmail: email, password: password) { [weak self] user, error in
                 if let error = error {
                     self?.showLoginError(titel:
                         "Error", message: error.localizedDescription)
                 } else {
-                    // 4.3
                     Auth.auth().signIn(withEmail: email, password: password)
                 }
             }
         }
-        // 5
         alert.addAction(saveAction)
         alert.addAction(cancelAction)
         present(alert, animated: true, completion: nil)
     }
-
-
-  
-    
-//    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool{
-//        let checkResult = checkUserData()
-//        if !checkResult {
-//            showLoginError()
-//        }
-//        return checkResult
-//    }
-    
-
 
     func showLoginError(titel: String,message: String){
         let alter = UIAlertController(title: titel, message: message, preferredStyle: .alert)
@@ -120,13 +87,11 @@ class LoginViewController: UIViewController {
         present(alter, animated: true, completion: nil)
     }
     
-    
     @objc func keyboardWasShown(notification: Notification){
         
         let info = notification.userInfo! as NSDictionary
         let kbSize = (info.value(forKey:UIResponder.keyboardFrameEndUserInfoKey) as! NSValue).cgRectValue.size
         let contentInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: kbSize.height, right: 0.0)
-        
         self.scrollView?.contentInset = contentInsets
         scrollView?.scrollIndicatorInsets = contentInsets
     }
@@ -141,7 +106,6 @@ class LoginViewController: UIViewController {
         self.scrollView?.endEditing(true)
     }
 
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -161,16 +125,14 @@ class LoginViewController: UIViewController {
         super.viewWillDisappear(animated)
         
         Auth.auth().removeStateDidChangeListener(listener!)
-        
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
+    
     func animateTitlesAppearing(){
         let offSet = view.bounds.width
         loginLabel.transform = CGAffineTransform(translationX: -offSet, y: 0)
         passwordLabel.transform = CGAffineTransform(translationX: offSet, y: 0)
-        
-        
         UIView.animate(withDuration: 1, delay: 1, options: .curveEaseOut, animations: {
             self.loginLabel.transform = .identity
             self.passwordLabel.transform = .identity
@@ -185,21 +147,5 @@ class LoginViewController: UIViewController {
         })
         
     }
-//    func animateAuthButton() {
-//        let animation = CASpringAnimation(keyPath: "transform.scale")
-//        animation.fromValue = 0
-//        animation.toValue = 1
-//        animation.stiffness = 200
-//        animation.mass = 2
-//        animation.duration = 2
-//        animation.beginTime = CACurrentMediaTime() + 1
-//        animation.fillMode = CAMediaTimingFillMode.backwards
-//
-//        self.signInLabel.layer.add(animation, forKey: nil)
-//    }
-    
-    
-    
-    
 
 }

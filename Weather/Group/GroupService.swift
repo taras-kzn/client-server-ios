@@ -6,11 +6,11 @@ import Alamofire
 import RealmSwift
 
 
-class GroupService  {
-    let baseUrl = "https://api.vk.com"
+final class GroupService  {
     
+    let baseUrl = "https://api.vk.com"
 
-    func loadGroupData(idUser: String,token: String,completion: @escaping ([GroupArray]) -> Void ){
+    func loadGroupData(idUser: String,token: String,completion: @escaping () -> Void ){
         let path = "/method/groups.get"
         let param : Parameters = [
             "user_id": idUser,
@@ -19,6 +19,7 @@ class GroupService  {
             "access_token": token,
             "v": "5.95"
         ]
+        
         let url = baseUrl+path
         
         Alamofire.request(url, method: .get, parameters: param).responseData { repsonse in
@@ -28,45 +29,23 @@ class GroupService  {
             print(array)
             array.forEach {$0.userIdName = idUser}
             self.saveGroupData(array, userId: idUser)
-            completion(array)
-            
+            completion()
         }
 
-    }
-    func saveGroupData(_ grops: [GroupArray], userId: String ){
-        let queue = DispatchQueue.global(qos: .utility)
-        queue.async {
-            do{
-                let realm = try Realm()
-                let oldGrops = realm.objects(GroupArray.self).filter("userIdName == %@", userId)
-                realm.beginWrite()
-                realm.delete(oldGrops)
-                realm.add(grops)
-                try realm.commitWrite()
-                print(realm.configuration.fileURL)
-                
-            }catch{
-                print("error")
-                
-            }
-        }
-
-//        do{
-//            let realm = try Realm()
-//            let oldGrops = realm.objects(GroupArray.self).filter("userIdName == %@", userId)
-//            realm.beginWrite()
-//            realm.delete(oldGrops)
-//            realm.add(grops)
-//            try realm.commitWrite()
-//            print(realm.configuration.fileURL)
-//            
-//        }catch{
-//            print("error")
-//            
-//        }
-
-        
     }
     
+    func saveGroupData(_ grops: [GroupArray], userId: String ){
+        do{
+            let realm = try Realm()
+            let oldGrops = realm.objects(GroupArray.self).filter("userIdName == %@", userId)
+            realm.beginWrite()
+            realm.delete(oldGrops)
+            realm.add(grops)
+            try realm.commitWrite()
+            print(realm.configuration.fileURL)
+        }catch{
+            print("error")
+        }
+    }
 
 }
