@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import RealmSwift
 
+
 final class GroupResponse: Decodable {
     
     let response : ItemsGroup

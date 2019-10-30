@@ -51,13 +51,6 @@ final class AllGroupViewController: UIViewController {
         fillSections()
         fillSectionsWithFriends()
         self.filterPersons = self.allGroupArray
-        
-//        allGroupService.loadAllGroupData(token: Session.instance.token) { [weak self] in
-//
-////            self?.loadDataRealmAllGroups()
-////            self?.tableView.reloadData()
-//
-//        }
     
     }
     
@@ -66,7 +59,7 @@ final class AllGroupViewController: UIViewController {
     }
     
     private func  searchBarIsEmpty () -> Bool {
-        // Возвращает true, если текст пустой или ноль,
+    
         return searchController.searchBar.text? .isEmpty ?? true
     }
     
@@ -96,7 +89,7 @@ final class AllGroupViewController: UIViewController {
                     }, completion: {_ in
                         print("update")
                     })
-                //self?.tableView.endUpdates()
+    
                 case .error(let error):
                     print(error)
                 }

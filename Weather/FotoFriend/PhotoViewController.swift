@@ -9,6 +9,7 @@
 import UIKit
 import SwiftKeychainWrapper
 
+
 final class PhotoViewController: UIViewController {
     
     private var friendServiceCoolection = FriendServic()
@@ -22,16 +23,7 @@ final class PhotoViewController: UIViewController {
         collectionView.dataSource = self
         userDefaulsSave()
         loadStringUserDefauls()
- //       loadSessionToken()
 
-        
-//        friendServiceCoolection.loadFriendsData(userId: userID, token: Session.instance.token) { [weak self] friendsArray in
-//            // сохраняем полученные данные в массиве, чтобы коллекция могла получить к ним доступ
-//            self?.friendArrayColecction = (friendsArray)
-//            self?.collectionView.reloadData()
-//           
-//            
-//        }
     }
 }
 

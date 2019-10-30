@@ -11,6 +11,7 @@ import FirebaseAuth
 import FirebaseFirestore
 import Firebase
 
+
 final class ChatViewController: UIViewController,UITextFieldDelegate{
     
     private var docRef: DocumentReference!
@@ -68,7 +69,7 @@ final class ChatViewController: UIViewController,UITextFieldDelegate{
                     i=i+1;
                     if (self.docRef!.documentID == document.documentID){
                         print("\(document.documentID) => \(document.data())")
-                        var nameDate = document.data()["messange"] as? String ?? ""
+                        let nameDate = document.data()["messange"] as? String ?? ""
                         self.textLabel.append(nameDate) //TODO
                    }
                 }
@@ -90,7 +91,7 @@ extension ChatViewController: UITableViewDelegate,UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Chat", for: indexPath) as! ChatTableViewCell
-        var mess = textLabel[indexPath.row]
+        let mess = textLabel[indexPath.row]
         cell.messangeLabel.text = mess
         cell.messangeLabel.layer.cornerRadius = 10
         cell.messangeLabel.layer.masksToBounds = true

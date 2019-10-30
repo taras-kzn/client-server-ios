@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 final class FriendTableViewCell: UITableViewCell {
 
     @IBOutlet weak var viewPhotoCell: UIView!

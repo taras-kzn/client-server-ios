@@ -45,12 +45,6 @@ final class FriendViewController: UIViewController {
         tableView .register(FriendHeader.self, forHeaderFooterViewReuseIdentifier: "header")
         loadDataRealm()
 
-//        friendServerc.loadFriendsData(userId: userID,token: Session.instance.token){ [weak self]  in
-//            self?.loadDataRealm()
-//            self?.tableView.reloadData()
-//
-//        }
-
         mapFriends = map(friends: self.friendsArray)
         sortArray = self.mapFriends.keys.sorted()
         userDefaulsSave()

@@ -110,7 +110,7 @@ final class LoginViewController: UIViewController {
         super.viewWillAppear(animated)
         
         listener = Auth.auth().addStateDidChangeListener { _, user in
-            print(user?.email)
+
             if user != nil{
                 self.performSegue(withIdentifier: "login", sender: self)
             }

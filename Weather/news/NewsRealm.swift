@@ -12,12 +12,6 @@ import Alamofire
 import UIKit
 
 
-
-
-
-
-
-
 final class NewsResponse: Decodable {
     
     let response: NewsItems

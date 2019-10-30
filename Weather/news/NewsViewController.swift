@@ -9,6 +9,7 @@
 import UIKit
 import RealmSwift
 
+
 final class NewsViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
@@ -28,13 +29,6 @@ final class NewsViewController: UIViewController {
         loadNewsRealm()
         tableView.reloadData()
         
-
-//        newsServise.loadNewsData(token: "86f426bcfee27d44f1c0ded0d5dd20e7722901b98c31336f33fcf7c7419c7526b4ef8b71dcd12aa7a7b39") { [weak self]  in
-//
-//            //self?.newsArray = (newsArray)
-//
-//        }
-    
     }
     
     private func loadNewsRealm(){
@@ -67,8 +61,8 @@ extension NewsViewController : UITableViewDataSource , UITableViewDelegate{
 
         let queue = DispatchQueue.global(qos: .utility)
         let imageURL = NSURL(string: news.imageGroup)
-        var imagePhotoGroup = URL(string: news.video)
-        var imageNews = URL(string: news.url)
+        let imagePhotoGroup = URL(string: news.video)
+        let imageNews = URL(string: news.url)
         let queueImage = DispatchQueue.global(qos: .userInitiated)
         queue.async {
             if let data = try? Data(contentsOf: imageURL as! URL ){

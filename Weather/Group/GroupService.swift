@@ -24,11 +24,11 @@ final class GroupService  {
         
         Alamofire.request(url, method: .get, parameters: param).responseData { repsonse in
             guard let data = repsonse.value else { return }
-            let group = try! JSONDecoder().decode(GroupResponse.self, from: data).response
-            let array = group.items
-            print(array)
-            array.forEach {$0.userIdName = idUser}
-            self.saveGroupData(array, userId: idUser)
+            let group = try? JSONDecoder().decode(GroupResponse.self, from: data).response
+            guard let array = group else {return}
+            let ar = array.items
+            ar.forEach {$0.userIdName = idUser}
+            self.saveGroupData(ar, userId: idUser)
             completion()
         }
 

@@ -11,6 +11,7 @@ import Alamofire
 import WebKit
 import SwiftKeychainWrapper
 
+
 final class VKViewController: UIViewController,WKNavigationDelegate {
     
     @IBOutlet weak var webView: WKWebView!
@@ -34,8 +35,8 @@ final class VKViewController: UIViewController,WKNavigationDelegate {
             URLQueryItem(name: "client_id", value: "6973302"),
             URLQueryItem(name: "display", value: "mobile"),
             URLQueryItem(name: "redirect_uri", value: "https://oauth.vk.com/blank.html"),
-            URLQueryItem(name: "scope", value: "262150"),
-            //URLQueryItem(name: "scope", value: "friends,wall"),
+            //URLQueryItem(name: "scope", value: "262150"),
+            URLQueryItem(name: "scope", value: "friends,wall"),
             URLQueryItem(name: "response_type", value: "token"),
             URLQueryItem(name: "v", value: "5.68")
         ]
@@ -67,10 +68,11 @@ final class VKViewController: UIViewController,WKNavigationDelegate {
                 return dict
         }
         let token = params["access_token"]
-        Session.instance.token = token!
+        guard let tokenn = token else {return}
+        Session.instance.token = tokenn
         KeychainWrapper.standard.set(token!, forKey: "token")
         loadSessionToken()
-        print(token)
+        print(tokenn)
         decisionHandler(.cancel)
     }
 

@@ -13,7 +13,7 @@ import RealmSwift
 
 
 final class FriendServic {
-    // базовый URL сервиса
+    
     let baseUrl = "https://api.vk.com"
     
     func loadFriendsData(userId: String,token: String,completion: @escaping () -> Void ){
@@ -26,19 +26,17 @@ final class FriendServic {
             "access_token": token,
             "v": "5.95"
         ]
-        // составляем URL из базового адреса сервиса и конкретного пути к ресурсу
+        
         let url = baseUrl+path
-        //делаем запрос
-//        Alamofire.request(url, method: .get, parameters: parameters).responseJSON { repsonse in
-//            print(repsonse.value)
-//        }
-        //делаем запрос
+
         Alamofire.request(url, method: .get, parameters: parameters).responseData { repsonse in
             guard let data = repsonse.value else { return }
-            let friend = try! JSONDecoder().decode(FriendsResponse.self, from: data).response
-            var array = friend.items
-            array.forEach {$0.uesrIdName = userId}
-            self.saveFriendsData(array, userId: userId)
+            let friend = try? JSONDecoder().decode(FriendsResponse.self, from: data).response
+
+            guard let array = friend else {return}
+            let ar = array.items
+            ar.forEach {$0.uesrIdName = userId}
+            self.saveFriendsData(ar, userId: userId)
             completion()
         }
        

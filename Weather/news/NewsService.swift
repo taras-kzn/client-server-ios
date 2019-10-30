@@ -11,32 +11,34 @@ import RealmSwift
 import Alamofire
 import UIKit
 
+
 final class NewsService {
-    // базовый URL сервиса
+
     let baseUrl = "https://api.vk.com"
-    // ключ для доступа к сервису
+    
     func loadNewsData(token: String,completion: @escaping () -> Void ){
         let path = "/method/newsfeed.get"
         let parameters: Parameters = [
             "filters":"post",
-            "count": "5",
+            "count": "1",
             "access_token": token,
             "v": "5.95"
         ]
-        // составляем URL из базового адреса сервиса и конкретного пути к ресурсу
+
         let url = baseUrl+path
 
         Alamofire.request(url, method: .get, parameters: parameters).responseData { repsonse in
             guard let data = repsonse.value else { return }
-            let news = try! JSONDecoder().decode(NewsResponse.self, from: data).response
-            let array = news.items
-            let newsGroup = news.groups
+            let news = try? JSONDecoder().decode(NewsResponse.self, from: data).response
+            guard let array = news else {return}
+            let ar = array.items
+            let newsGroup = array.groups
             var arrayNews = [SizeImage]()
             var indexPath = IndexPath()
             var oneArray = [NewsTable]()
             let queu = DispatchQueue.global(qos: .utility)
             queu.async {
-                for a in array{
+                for a in ar{
                     let one = NewsTable()
                     one.newsId = a.newsId
                     one.comments = a.comments
@@ -61,9 +63,7 @@ final class NewsService {
                     }
                 }
             }
-
-            print(array)
-            self.saveNewsData(array,newsGroup,oneArray)
+            self.saveNewsData(ar,newsGroup,oneArray)
             completion()
         }
     }

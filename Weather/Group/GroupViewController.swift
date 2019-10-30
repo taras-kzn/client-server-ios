@@ -11,7 +11,6 @@ import RealmSwift
 import FirebaseAuth
 
 
-
 final class GroupViewController: UIViewController {
     
     var groupService = GroupService()
@@ -53,21 +52,11 @@ final class GroupViewController: UIViewController {
         loadDataRealmGroups()
         tableView.reloadData()
         
-       
-//        groupService.loadGroupData(idUser: userID, token: Session.instance.token) { [weak self] in
-//            // сохраняем полученные данные в массиве, чтобы коллекция могла получить к ним доступ
-//
-//            self?.loadDataRealmGroups()
-//            self?.tableView.reloadData()
-//
-//
-//        }
-        
     }
     
     @IBAction func logOut(_ sender: Any) {
         do {
-            // 1
+            
             try Auth.auth().signOut()
             self.dismiss(animated: true, completion: nil)
         } catch (let error) {
@@ -96,7 +85,6 @@ final class GroupViewController: UIViewController {
                     }, completion: {_ in
                         print("update")
                     })
-                    //self?.tableView.endUpdates()
                 case .error(let error):
                     print(error)
                 }

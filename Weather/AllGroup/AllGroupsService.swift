@@ -11,6 +11,7 @@ import UIKit
 import Alamofire
 import RealmSwift
 
+
 final class AllGroupService  {
     
     let baseUrl = "https://api.vk.com"
@@ -22,13 +23,15 @@ final class AllGroupService  {
             "access_token": token,
             "v": "5.95"
         ]
+        
         let url = baseUrl+path
         
         Alamofire.request(url, method: .get, parameters: param).responseData { repsonse in
             guard let data = repsonse.value else { return }
-            let allGroup = try! JSONDecoder().decode(AllGroupResponse.self, from: data).response
-            var array = allGroup.items
-            self.saveAllGroupData(array)
+            let allGroup = try? JSONDecoder().decode(AllGroupResponse.self, from: data).response
+            guard let array = allGroup else {return}
+            let ar = array.items
+            self.saveAllGroupData(ar)
             completion()
         }
         

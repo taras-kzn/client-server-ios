@@ -10,13 +10,12 @@ import Foundation
 import RealmSwift
 import UIKit
 
+
 final class AllGroupResponse: Decodable {
-    
     let response : ItemsAllGroup
 }
 
 final class ItemsAllGroup:  Decodable {
-    
     let items : [AllGroupArray]
 }
 
@@ -31,8 +30,8 @@ final class AllGroupArray: Object, Decodable {
     }
 
     convenience required init (from decoder: Decoder) throws {
-        
         self.init()
+        
         let values = try decoder.container(keyedBy: CodingKeys.self)
         self.allGroupName = try values.decode(String.self, forKey: .name)
         self.allGroupImage = try values.decode(String.self, forKey: .photo_50)
